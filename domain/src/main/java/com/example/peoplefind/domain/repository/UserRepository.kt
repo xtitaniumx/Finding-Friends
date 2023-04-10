@@ -14,9 +14,9 @@ interface UserRepository {
         const val USER_ID = "user_id"
     }
 
-    suspend fun registerAccount(param: RegisterAccountParam): Resource<UserItem>?
+    suspend fun registerAccount(param: RegisterAccountParam): Resource<UserItem>
 
-    suspend fun authByPhone(param: AuthByPhoneParam): Resource<UserItem>?
+    suspend fun authByPhone(param: AuthByPhoneParam): Resource<UserItem>
 
     fun saveLoginData(param: SaveLoginDataParam)
 

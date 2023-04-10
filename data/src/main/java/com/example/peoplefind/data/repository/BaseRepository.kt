@@ -11,15 +11,15 @@ import retrofit2.Response
 import java.io.IOException
 
 abstract class BaseRepository {
-    suspend fun <T> safeApiCall(apiToBeCalled: suspend () -> Response<T>?): Resource<T> {
+    suspend fun <T> safeApiCall(apiToBeCalled: suspend () -> Response<T>): Resource<T> {
         return withContext(Dispatchers.IO) {
             try {
                 val response = apiToBeCalled()
 
-                if (response?.isSuccessful == true) {
+                if (response.isSuccessful) {
                     Resource.Success(data = response.body()!!)
                 } else {
-                    val errorResponse = convertErrorBody(response?.errorBody())
+                    val errorResponse = convertErrorBody(response.errorBody())
                     Resource.Error(errorMessage = errorResponse?.failureMessage ?: "Что-то пошло не так")
                 }
             } catch (e: HttpException) {
