@@ -12,10 +12,10 @@ class AuthByPhoneUseCase(private val userRepository: UserRepository) {
         resource.data?.let { data ->
             userRepository.saveLoginData(
                 SaveLoginDataParam(
+                    userId = data.id,
                     login = authByPhoneParam.phoneNumber,
                     password = authByPhoneParam.password,
-                    rememberState = authByPhoneParam.remember,
-                    userItem = data
+                    rememberState = authByPhoneParam.remember
                 )
             )
         }

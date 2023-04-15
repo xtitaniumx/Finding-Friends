@@ -25,11 +25,11 @@ class UserRepositoryImpl(apiClient: ApiClient, context: Context) : UserRepositor
     }
 
     override fun saveLoginData(param: SaveLoginDataParam) {
+        saveUserData(param.userId, UserRepository.USER_ID)
         saveUserData(
             makeToken(login = param.login, password = param.password),
             UserRepository.USER_TOKEN
         )
-        saveUserData(param.userItem.id, UserRepository.USER_ID)
         saveUserData(param.rememberState.toString(), UserRepository.USER_LOGGED_IN)
     }
 

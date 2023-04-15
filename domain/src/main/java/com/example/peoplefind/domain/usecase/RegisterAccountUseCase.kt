@@ -15,10 +15,10 @@ class RegisterAccountUseCase(private val userRepository: UserRepository) {
         resource.data?.let { data ->
             userRepository.saveLoginData(
                 SaveLoginDataParam(
+                    userId = data.id,
                     login = registerAccountParam.phoneNumber,
                     password = registerAccountParam.password,
-                    rememberState = true,
-                    userItem = data
+                    rememberState = true
                 )
             )
         }
