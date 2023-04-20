@@ -3,7 +3,7 @@ package com.example.peoplefind.data.repository
 import android.content.Context
 import android.util.Base64
 import com.example.peoplefind.data.api.ApiClient
-import com.example.peoplefind.domain.model.Resource
+import com.example.peoplefind.domain.model.NetworkResult
 import com.example.peoplefind.domain.model.request.AuthByPhoneParam
 import com.example.peoplefind.domain.model.request.FetchUserDataParam
 import com.example.peoplefind.domain.model.request.RegisterAccountParam
@@ -16,11 +16,11 @@ class UserRepositoryImpl(apiClient: ApiClient, context: Context) : UserRepositor
     private val apiService = apiClient.getApiService(this)
     private val pref = context.getSharedPreferences("user_data", Context.MODE_PRIVATE)
 
-    override suspend fun registerAccount(param: RegisterAccountParam): Resource<UserItem> {
+    override suspend fun registerAccount(param: RegisterAccountParam): NetworkResult<UserItem> {
         return safeApiCall { apiService.registerUser(request = param) }
     }
 
-    override suspend fun authByPhone(param: AuthByPhoneParam): Resource<UserItem> {
+    override suspend fun authByPhone(param: AuthByPhoneParam): NetworkResult<UserItem> {
         return safeApiCall { apiService.authUserByPhone(request = param) }
     }
 

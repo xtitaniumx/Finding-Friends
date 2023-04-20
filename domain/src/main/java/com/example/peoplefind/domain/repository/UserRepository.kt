@@ -1,6 +1,6 @@
 package com.example.peoplefind.domain.repository
 
-import com.example.peoplefind.domain.model.Resource
+import com.example.peoplefind.domain.model.NetworkResult
 import com.example.peoplefind.domain.model.request.AuthByPhoneParam
 import com.example.peoplefind.domain.model.request.FetchUserDataParam
 import com.example.peoplefind.domain.model.request.RegisterAccountParam
@@ -14,9 +14,9 @@ interface UserRepository {
         const val USER_LOGGED_IN = "user_logged_in"
     }
 
-    suspend fun registerAccount(param: RegisterAccountParam): Resource<UserItem>
+    suspend fun registerAccount(param: RegisterAccountParam): NetworkResult<UserItem>
 
-    suspend fun authByPhone(param: AuthByPhoneParam): Resource<UserItem>
+    suspend fun authByPhone(param: AuthByPhoneParam): NetworkResult<UserItem>
 
     fun saveLoginData(param: SaveLoginDataParam)
 
