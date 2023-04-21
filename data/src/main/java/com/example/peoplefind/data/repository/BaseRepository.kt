@@ -21,17 +21,15 @@ abstract class BaseRepository {
                     NetworkResult.Success(data = response.body()!!)
                 } else {
                     val errorResponse = convertErrorBody(response.errorBody())
-                    NetworkResult.Error(errorMessage = errorResponse?.failureMessage ?: "Внутренняя ошибка сервера, повторите попытку позже")
+                    NetworkResult.Error(errorMessage = errorResponse?.failureMessage ?: "Internal server error, try again later")
                 }
-                // Подумать над сообщениями об ошибке
             } catch (e: HttpException) {
-                NetworkResult.Error(errorMessage = e.message ?: "Сервер не отвечает, повторите попытку позже")
+                NetworkResult.Error(errorMessage = e.message ?: "Server doesn't respond, try again later")
             } catch (e: IOException) {
-                Timber.e(e, e.message)
-                NetworkResult.Error(errorMessage = "Пожалуйста, проверьте подключение к сети")
+                NetworkResult.Error(errorMessage = "Please check the network connection")
             } catch (e: Exception) {
                 Timber.e(e, e.message)
-                NetworkResult.Error(errorMessage = "Что-то пошло не так")
+                NetworkResult.Error(e, errorMessage = "Something went wrong")
             }
         }
     }
@@ -43,6 +41,7 @@ abstract class BaseRepository {
                 moshiAdapter.fromJson(it)
             }
         } catch (e: Exception) {
+            Timber.e(e, e.message)
             null
         }
     }

@@ -11,8 +11,8 @@ class RegisterAccountUseCase(private val userRepository: UserRepository) {
         if (registerAccountParam.password != registerAccountParam.passwordConfirm) {
             return NetworkResult.Error(errorMessage = "Пароли не совпадают")
         }
-        val resource = userRepository.registerAccount(param = registerAccountParam)
-        resource.data?.let { data ->
+        val result = userRepository.registerAccount(param = registerAccountParam)
+        result.data?.let { data ->
             userRepository.saveLoginData(
                 SaveLoginDataParam(
                     userId = data.id,
@@ -22,6 +22,6 @@ class RegisterAccountUseCase(private val userRepository: UserRepository) {
                 )
             )
         }
-        return resource
+        return result
     }
 }

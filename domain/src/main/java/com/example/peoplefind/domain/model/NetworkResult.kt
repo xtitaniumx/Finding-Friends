@@ -10,9 +10,5 @@ sealed class NetworkResult<T>(
 
     // We'll pass error message wrapped in this 'Error'
     // class to the UI in case of failure response
-    class Error<T>(errorMessage: String) : NetworkResult<T>(message = errorMessage)
-
-    // We'll just pass object of this Loading
-    // class, just before making an api call
-    class Loading<T> : NetworkResult<T>()
+    class Error<T>(val e: Throwable? = null, errorMessage: String) : NetworkResult<T>(message = errorMessage)
 }
