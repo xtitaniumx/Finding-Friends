@@ -1,7 +1,7 @@
 package com.example.peoplefind.data.repository
 
 import com.example.peoplefind.data.api.ErrorResponse
-import com.example.peoplefind.domain.model.response.ApiResult
+import com.example.peoplefind.domain.model.ApiResult
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

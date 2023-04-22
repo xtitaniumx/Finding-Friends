@@ -1,6 +1,6 @@
 package com.example.peoplefind.domain.extension
 
-import com.example.peoplefind.domain.model.response.ApiResult
+import com.example.peoplefind.domain.model.ApiResult
 
 fun <T : Any> ApiResult<T>.onLoading(
     executable: () -> Unit

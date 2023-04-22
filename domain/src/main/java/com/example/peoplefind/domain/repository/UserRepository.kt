@@ -1,6 +1,6 @@
 package com.example.peoplefind.domain.repository
 
-import com.example.peoplefind.domain.model.response.ApiResult
+import com.example.peoplefind.domain.model.ApiResult
 import com.example.peoplefind.domain.model.request.AuthByPhoneParam
 import com.example.peoplefind.domain.model.request.FetchUserDataParam
 import com.example.peoplefind.domain.model.request.RegisterAccountParam
