@@ -1,34 +1,27 @@
 package com.example.peoplefind.data.repository
 
 import android.content.Context
-import android.util.Base64
 import com.example.peoplefind.data.api.ApiClient
-import com.example.peoplefind.data.api.TokenManager
-import com.example.peoplefind.domain.model.request.AuthByPhoneParam
 import com.example.peoplefind.domain.model.request.FetchUserDataParam
+import com.example.peoplefind.domain.model.request.LoginAccountParam
 import com.example.peoplefind.domain.model.request.RegisterAccountParam
 import com.example.peoplefind.domain.model.request.SaveLoginDataParam
 import com.example.peoplefind.domain.repository.UserRepository
-import java.nio.charset.StandardCharsets
 
-class UserRepositoryImpl(apiClient: ApiClient, context: Context) : UserRepository, BaseRepository() {
-    private val apiService = apiClient.getApiService(TokenManager(context))
+class UserRepositoryImpl(apiClient: ApiClient, context: Context) : UserRepository, BaseRepository(context) {
+    private val apiService = apiClient.getApiService(tokenManager)
     private val pref = context.getSharedPreferences("user_data", Context.MODE_PRIVATE)
 
     override fun registerAccount(param: RegisterAccountParam) = apiRequestFlow {
         apiService.registerUser(request = param)
     }
 
-    override fun authByPhone(param: AuthByPhoneParam) = apiRequestFlow {
-        apiService.authUserByPhone(request = param)
+    override fun loginAccount(param: LoginAccountParam) = apiRequestFlow {
+        apiService.loginUser(request = param)
     }
 
     override fun saveLoginData(param: SaveLoginDataParam) {
         saveUserData(param.userId, UserRepository.USER_ID)
-        saveUserData(
-            makeToken(login = param.login, password = param.password),
-            UserRepository.USER_TOKEN
-        )
         saveUserData(param.rememberState.toString(), UserRepository.USER_LOGGED_IN)
     }
 
@@ -45,11 +38,5 @@ class UserRepositoryImpl(apiClient: ApiClient, context: Context) : UserRepositor
             putString(dataId, data)
             apply()
         }
-    }
-
-    private fun makeToken(login: String, password: String): String {
-        val originalString = "${login}:${password}"
-        val data = originalString.toByteArray(StandardCharsets.UTF_8)
-        return "Basic ${Base64.encodeToString(data, Base64.NO_WRAP)}"
     }
 }

@@ -15,13 +15,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewModel.getUserData(object: CoroutinesErrorHandler {
+        viewModel.getUserData(object: BaseViewModel.CoroutinesErrorHandler {
             override fun onError(message: String) {
 
             }
         })
 
-        viewModel.user.observe(this) {
+        viewModel.authInfo.observe(this) {
             it.onLoading {
 
             }.onSuccess {

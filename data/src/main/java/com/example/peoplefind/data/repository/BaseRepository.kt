@@ -1,6 +1,8 @@
 package com.example.peoplefind.data.repository
 
+import android.content.Context
 import com.example.peoplefind.data.api.ErrorResponse
+import com.example.peoplefind.data.api.TokenManager
 import com.example.peoplefind.domain.model.ApiResult
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
@@ -13,7 +15,9 @@ import retrofit2.Response
 import timber.log.Timber
 import java.io.IOException
 
-abstract class BaseRepository {
+abstract class BaseRepository(context: Context) {
+    protected val tokenManager = TokenManager(context)
+
     fun <T> apiRequestFlow(call: suspend () -> Response<T>): Flow<ApiResult<T>> = flow {
         emit(ApiResult.Loading)
 

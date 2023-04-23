@@ -7,6 +7,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -19,7 +20,7 @@ open class BaseViewModel : ViewModel() {
                 errorHandler.onError(error.localizedMessage ?: "Error occurred! Please try again.")
             }
         }) {
-            request().collect {
+            request().distinctUntilChanged().collect {
                 withContext(Dispatchers.Main) {
                     liveData.value = it
                 }
@@ -34,8 +35,8 @@ open class BaseViewModel : ViewModel() {
                 it.cancel()
         }
     }
-}
 
-interface CoroutinesErrorHandler {
-    fun onError(message: String)
+    interface CoroutinesErrorHandler {
+        fun onError(message: String)
+    }
 }

@@ -12,7 +12,7 @@ import okhttp3.Route
 class AuthAuthenticator(private val tokenManager: TokenManager) : Authenticator {
     override fun authenticate(route: Route?, response: Response): Request? {
         val token = runBlocking {
-            tokenManager.getToken().first()
+            tokenManager.getRefreshToken().first()
         }
         return runBlocking {
             val newToken = getNewToken(token)
@@ -21,9 +21,10 @@ class AuthAuthenticator(private val tokenManager: TokenManager) : Authenticator 
                 tokenManager.deleteToken()
 
             newToken.body()?.let {
-                tokenManager.saveToken(it.refreshToken)
+                tokenManager.saveRefreshToken(it.refreshToken)
+                tokenManager.saveToken(it.accessToken)
                 response.request.newBuilder()
-                    .header("Authorization", "Basic ${it.refreshToken}")
+                    .header("Authorization", "Basic ${it.accessToken}")
                     .build()
             }
         }
