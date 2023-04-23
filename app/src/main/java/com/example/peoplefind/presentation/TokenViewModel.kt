@@ -25,12 +25,13 @@ class TokenViewModel(private val getUserTokensUseCase: GetUserTokensUserCase,
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            getUserTokensUseCase().first.collect {
+            val tokens = getUserTokensUseCase()
+            tokens.first.collect {
                 withContext(Dispatchers.Main) {
                     tokenMutable.value = it
                 }
             }
-            getUserTokensUseCase().second.collect {
+            tokens.second.collect {
                 withContext(Dispatchers.Main) {
                     refreshTokenMutable.value = it
                 }

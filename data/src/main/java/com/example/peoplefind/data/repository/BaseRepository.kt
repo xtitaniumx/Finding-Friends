@@ -10,20 +10,20 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withTimeoutOrNull
+import retrofit2.Call
 import retrofit2.HttpException
-import retrofit2.Response
 import timber.log.Timber
 import java.io.IOException
 
 abstract class BaseRepository(context: Context) {
     protected val tokenManager = TokenManager(context)
 
-    fun <T> apiRequestFlow(call: suspend () -> Response<T>): Flow<ApiResult<T>> = flow {
+    fun <T> apiRequestFlow(call: suspend () -> Call<T>): Flow<ApiResult<T>> = flow {
         emit(ApiResult.Loading)
 
         withTimeoutOrNull(20000L) {
             try {
-                val response = call()
+                val response = call().execute()
 
                 if (response.isSuccessful) {
                     response.body()?.let { data ->

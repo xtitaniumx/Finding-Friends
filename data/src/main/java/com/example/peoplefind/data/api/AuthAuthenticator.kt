@@ -8,6 +8,7 @@ import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.Route
+import retrofit2.Call
 
 class AuthAuthenticator(private val tokenManager: TokenManager) : Authenticator {
     override fun authenticate(route: Route?, response: Response): Request? {
@@ -15,7 +16,7 @@ class AuthAuthenticator(private val tokenManager: TokenManager) : Authenticator 
             tokenManager.getRefreshToken().first()
         }
         return runBlocking {
-            val newToken = getNewToken(token)
+            val newToken = getNewToken(token).execute()
 
             if (!newToken.isSuccessful || newToken.body() == null)
                 tokenManager.deleteToken()
@@ -30,7 +31,7 @@ class AuthAuthenticator(private val tokenManager: TokenManager) : Authenticator 
         }
     }
 
-    private fun getNewToken(refreshToken: String?): retrofit2.Response<AuthInfo> {
+    private suspend fun getNewToken(refreshToken: String?): Call<AuthInfo> {
         val apiClient = ApiClient().getApiService(tokenManager)
         return apiClient.refreshToken(request = RefreshTokenParam("Basic $refreshToken"))
     }
