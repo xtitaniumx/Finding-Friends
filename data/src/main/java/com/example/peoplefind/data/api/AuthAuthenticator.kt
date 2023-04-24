@@ -25,7 +25,7 @@ class AuthAuthenticator(private val tokenManager: TokenManager) : Authenticator 
                 tokenManager.saveRefreshToken(it.refreshToken)
                 tokenManager.saveToken(it.accessToken)
                 response.request.newBuilder()
-                    .header("Authorization", "Basic ${it.accessToken}")
+                    .header("Authorization", "Bearer ${it.accessToken}")
                     .build()
             }
         }
@@ -33,6 +33,6 @@ class AuthAuthenticator(private val tokenManager: TokenManager) : Authenticator 
 
     private suspend fun getNewToken(refreshToken: String?): Call<AuthInfo> {
         val apiClient = ApiClient().getApiService(tokenManager)
-        return apiClient.refreshToken(request = RefreshTokenParam("Basic $refreshToken"))
+        return apiClient.refreshToken(request = RefreshTokenParam("Bearer $refreshToken"))
     }
 }

@@ -14,10 +14,10 @@ import kotlinx.coroutines.withContext
 open class BaseViewModel : ViewModel() {
     private var job: Job? = null
 
-    protected fun <T> baseRequest(liveData: MutableLiveData<T>, errorHandler: CoroutinesErrorHandler, request: () -> Flow<T>) {
+    protected fun <T> baseRequest(liveData: MutableLiveData<T>, errorLiveData: MutableLiveData<String>, request: () -> Flow<T>) {
         job = viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler { _, error ->
             viewModelScope.launch(Dispatchers.Main) {
-                errorHandler.onError(error.localizedMessage ?: "Error occurred! Please try again.")
+                 errorLiveData.value = error.localizedMessage ?: "Error occurred! Please try again."
             }
         }) {
             request().distinctUntilChanged().collect {
@@ -34,9 +34,5 @@ open class BaseViewModel : ViewModel() {
             if (it.isActive)
                 it.cancel()
         }
-    }
-
-    interface CoroutinesErrorHandler {
-        fun onError(message: String)
     }
 }

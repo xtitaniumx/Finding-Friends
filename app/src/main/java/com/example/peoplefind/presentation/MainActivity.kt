@@ -25,21 +25,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() = with(binding) {
-        val errorHandler = object: BaseViewModel.CoroutinesErrorHandler {
-            override fun onError(message: String) {
-                Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
-            }
-        }
-
         buttonRegister.setOnClickListener {
             viewModel.registerAccount(
-                coroutinesErrorHandler = errorHandler,
                 email = "abc@gmail.com",
                 birthDate = "2023-04-23T11:49:12.491Z",
                 password = "abc",
                 passwordConfirm = "abc",
                 role = Role.Admin
             )
+        }
+
+        viewModel.coroutineError.observe(this@MainActivity) {
+            Toast.makeText(this@MainActivity, it, Toast.LENGTH_SHORT).show()
         }
 
         viewModel.authInfo.observe(this@MainActivity) { result ->
