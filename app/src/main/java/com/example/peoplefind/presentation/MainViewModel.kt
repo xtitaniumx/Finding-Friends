@@ -9,8 +9,8 @@ import com.example.peoplefind.domain.model.response.AuthInfo
 import com.example.peoplefind.domain.usecase.RegisterAccountUseCase
 
 class MainViewModel(private val registerAccountUseCase: RegisterAccountUseCase) : BaseViewModel() {
-    private val coroutineErrorMutable = MutableLiveData<String>()
-    val coroutineError: LiveData<String> = coroutineErrorMutable
+    private val authInfoFlowErrorMutable = MutableLiveData<String>()
+    val authInfoFlowError: LiveData<String> = authInfoFlowErrorMutable
 
     private val authInfoMutable = MutableLiveData<ApiResult<AuthInfo>>()
     val authInfo: LiveData<ApiResult<AuthInfo>> = authInfoMutable
@@ -21,7 +21,7 @@ class MainViewModel(private val registerAccountUseCase: RegisterAccountUseCase) 
         password: String,
         passwordConfirm: String,
         role: Role
-    ) = baseRequest(authInfoMutable, coroutineErrorMutable) {
+    ) = baseRequest(authInfoMutable, authInfoFlowErrorMutable) {
         registerAccountUseCase(
             RegisterAccountParam(email, birthDate, password, passwordConfirm, role)
         )

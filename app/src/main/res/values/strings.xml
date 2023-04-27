@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">PeopleFind</string>
+    <string name="welcome_header">Приложение для расширения круга общения и поиска новых друзей с общими интересами.</string>
+    <string name="welcome_description">Вы сможете найти людей рядом с вами, желающих дружить, обмениваться опытом.</string>
+    <string name="start_button">Начать</string>
+    <string name="to_login_screen">Я уже <u>зарегистрирован</u></string>
 </resources>

@@ -1,15 +1,8 @@
 package com.example.peoplefind.presentation
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.peoplefind.databinding.ActivityMainBinding
-import com.example.peoplefind.domain.extension.onFailure
-import com.example.peoplefind.domain.extension.onLoading
-import com.example.peoplefind.domain.extension.onSuccess
-import com.example.peoplefind.domain.model.Role
-import koleton.api.hideSkeleton
-import koleton.api.loadSkeleton
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -25,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() = with(binding) {
-        buttonRegister.setOnClickListener {
+        /*buttonRegister.setOnClickListener {
             viewModel.registerAccount(
                 email = "abc@gmail.com",
                 birthDate = "2023-04-23T11:49:12.491Z",
@@ -33,13 +26,13 @@ class MainActivity : AppCompatActivity() {
                 passwordConfirm = "abc",
                 role = Role.Admin
             )
-        }
+        }*/
 
-        viewModel.coroutineError.observe(this@MainActivity) {
+        /*viewModel.authInfoFlowError.observe(this@MainActivity) {
             Toast.makeText(this@MainActivity, it, Toast.LENGTH_SHORT).show()
-        }
+        }*/
 
-        viewModel.authInfo.observe(this@MainActivity) { result ->
+        /*viewModel.authInfo.observe(this@MainActivity) { result ->
             result.onLoading {
                 //Toast.makeText(this@MainActivity, "Loading...", Toast.LENGTH_LONG).show()
                 textAccountInfo.loadSkeleton()
@@ -54,6 +47,6 @@ class MainActivity : AppCompatActivity() {
                 textAccountInfo.text = "Message: $errorMessage, code: $code"
                 textAccountInfo.hideSkeleton()
             }
-        }
+        }*/
     }
 }
