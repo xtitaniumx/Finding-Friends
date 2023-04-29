@@ -43,7 +43,7 @@ class RegisterActivity : AppCompatActivity() {
                 )
                 val intent = Intent(this@RegisterActivity, MainActivity::class.java)
                 startActivity(intent)
-            }.onFailure { message, error, code ->
+            }.onFailure { message, error ->
                 skeletonLayout.showOriginal()
                 MaterialAlertDialogBuilder(this@RegisterActivity)
                     .setTitle(resources.getString(R.string.register_error))

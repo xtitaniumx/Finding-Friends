@@ -13,8 +13,10 @@ class TokenRepositoryImpl(context: Context) : TokenRepository, BaseRepository(co
     }
 
     override suspend fun saveUserTokens(param: SaveUserTokensParam) {
-        tokenManager.saveRefreshToken(param.refreshToken)
-        tokenManager.saveToken(param.accessToken)
+        tokenManager.saveTokens(
+            token = param.accessToken,
+            refreshToken = param.refreshToken
+        )
     }
 
     override suspend fun deleteUserTokens() {

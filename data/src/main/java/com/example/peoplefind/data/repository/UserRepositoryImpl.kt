@@ -2,15 +2,16 @@ package com.example.peoplefind.data.repository
 
 import android.content.Context
 import com.example.peoplefind.data.api.ApiClient
-import com.example.peoplefind.domain.model.request.FetchUserDataParam
+import com.example.peoplefind.data.api.UserDataManager
 import com.example.peoplefind.domain.model.request.LoginAccountParam
 import com.example.peoplefind.domain.model.request.RegisterAccountParam
 import com.example.peoplefind.domain.model.request.SaveLoginDataParam
 import com.example.peoplefind.domain.repository.UserRepository
+import kotlinx.coroutines.flow.Flow
 
 class UserRepositoryImpl(apiClient: ApiClient, context: Context) : UserRepository, BaseRepository(context) {
     private val apiService = apiClient.getApiService(tokenManager)
-    private val pref = context.getSharedPreferences("user_data", Context.MODE_PRIVATE)
+    private val userDataManager = UserDataManager(context)
 
     override fun registerAccount(param: RegisterAccountParam) = apiRequestFlow {
         apiService.registerUser(request = param)
@@ -20,23 +21,19 @@ class UserRepositoryImpl(apiClient: ApiClient, context: Context) : UserRepositor
         apiService.loginUser(request = param)
     }
 
-    override fun saveLoginData(param: SaveLoginDataParam) {
-        saveUserData(param.userId, UserRepository.USER_ID)
-        saveUserData(param.rememberState.toString(), UserRepository.USER_LOGGED_IN)
+    override fun getUserId(): Flow<String?> {
+        return userDataManager.getId()
     }
 
-    override fun fetchUserData(param: FetchUserDataParam): String? {
-        return pref.getString(param.dataId, null)
+    override fun getUserLoginState(): Flow<Boolean?> {
+        return userDataManager.getLoginState()
     }
 
-    override fun removeAllUserData() {
-        pref.edit().clear().apply()
+    override suspend fun saveUserData(param: SaveLoginDataParam) {
+        userDataManager.saveData(param)
     }
 
-    private fun saveUserData(data: String, dataId: String) {
-        pref.edit().apply {
-            putString(dataId, data)
-            apply()
-        }
+    override suspend fun deleteAllUserData() {
+        userDataManager.deleteAllData()
     }
 }

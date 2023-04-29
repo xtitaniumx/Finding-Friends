@@ -19,9 +19,9 @@ fun <T : Any> ApiResult<T>.onSuccess(
 }
 
 fun <T : Any> ApiResult<T>.onFailure(
-    executable: (message: String, error: String?, code: Int) -> Unit
+    executable: (message: String, error: String?) -> Unit
 ): ApiResult<T> = apply {
     if (this is ApiResult.Failure) {
-        executable(message, error, code)
+        executable(message, error)
     }
 }

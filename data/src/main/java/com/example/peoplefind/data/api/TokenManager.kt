@@ -9,9 +9,9 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class TokenManager(private val context: Context) {
-    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "token_data")
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "token_data")
 
+class TokenManager(private val context: Context) {
     companion object {
         private val TOKEN_KEY = stringPreferencesKey("jwt_token")
         private val REFRESH_TOKEN_KEY = stringPreferencesKey("jwt_refresh_token")
@@ -29,14 +29,9 @@ class TokenManager(private val context: Context) {
         }
     }
 
-    suspend fun saveToken(token: String) {
+    suspend fun saveTokens(token: String, refreshToken: String) {
         context.dataStore.edit { preferences ->
             preferences[TOKEN_KEY] = token
-        }
-    }
-
-    suspend fun saveRefreshToken(refreshToken: String) {
-        context.dataStore.edit { preferences ->
             preferences[REFRESH_TOKEN_KEY] = refreshToken
         }
     }

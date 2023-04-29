@@ -5,11 +5,10 @@ sealed class ApiResult<out T> {
 
     data class Success<out T>(
         val data: T
-    ): ApiResult<T>()
+    ) : ApiResult<T>()
 
     data class Failure(
         val message: String,
-        val error: String?,
-        val code: Int,
-    ): ApiResult<Nothing>()
+        val error: String?
+    ) : ApiResult<Nothing>()
 }

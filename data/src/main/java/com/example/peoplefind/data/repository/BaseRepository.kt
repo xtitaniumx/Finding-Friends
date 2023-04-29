@@ -33,37 +33,44 @@ abstract class BaseRepository(private val context: Context) {
                 } else {
                     response.errorBody()?.let { error ->
                         error.close()
-                        val parsedError: ErrorResponse = Gson().fromJson(error.charStream(), ErrorResponse::class.java)
-                        emit(ApiResult.Failure(
-                            message = context.resources.getString(R.string.error),
-                            error = parsedError.failureMessage,
-                            code = 400)
+                        val parsedError: ErrorResponse =
+                            Gson().fromJson(error.charStream(), ErrorResponse::class.java)
+                        emit(
+                            ApiResult.Failure(
+                                message = context.resources.getString(R.string.error),
+                                error = parsedError.failureMessage + ", HTTP 400"
+                            )
                         )
                     }
                 }
             } catch (e: HttpException) {
-                emit(ApiResult.Failure(
-                    message = context.resources.getString(R.string.http_error),
-                    error = e.localizedMessage,
-                    code = e.code())
+                emit(
+                    ApiResult.Failure(
+                        message = context.resources.getString(R.string.http_error),
+                        error = e.message
+                    )
                 )
             } catch (e: IOException) {
-                emit(ApiResult.Failure(
-                    message = context.resources.getString(R.string.network_error),
-                    error = e.message,
-                    code = 400)
+                emit(
+                    ApiResult.Failure(
+                        message = context.resources.getString(R.string.network_error),
+                        error = e.message
+                    )
                 )
             } catch (e: Exception) {
                 Timber.e(e, e.message)
-                emit(ApiResult.Failure(
-                    message = context.resources.getString(R.string.error),
-                    error = e.message,
-                    code = 400)
+                emit(
+                    ApiResult.Failure(
+                        message = context.resources.getString(R.string.error),
+                        error = e.message
+                    )
                 )
             }
-        } ?: emit(ApiResult.Failure(
-            message = context.resources.getString(R.string.timeout_error),
-            error = null,
-            code = 408))
+        } ?: emit(
+            ApiResult.Failure(
+                message = context.resources.getString(R.string.timeout_error),
+                error = "HTTP 408"
+            )
+        )
     }.flowOn(Dispatchers.IO)
 }
