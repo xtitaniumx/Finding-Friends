@@ -1,7 +1,19 @@
 <resources>
     <string name="app_name">PeopleFind</string>
+
+    <!-- Main Activity -->
     <string name="welcome_header">Приложение для расширения круга общения и поиска новых друзей с общими интересами.</string>
     <string name="welcome_description">Вы сможете найти людей рядом с вами, желающих дружить, обмениваться опытом.</string>
     <string name="start_button">Начать</string>
     <string name="to_login_screen">Я уже <u>зарегистрирован</u></string>
+
+    <!-- Register Activity -->
+    <string name="register">Регистрация</string>
+    <string name="email">Введите email</string>
+    <string name="birthday">Введите дату рождения</string>
+    <string name="password">Придумайте пароль</string>
+    <string name="password_confirm">Повторите пароль</string>
+    <string name="register_button">Зарегистрироваться</string>
+    <string name="register_error">Не удалось зарегистрироваться</string>
+    <string name="accept">ОК</string>
 </resources>

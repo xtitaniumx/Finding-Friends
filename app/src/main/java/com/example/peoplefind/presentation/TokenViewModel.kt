@@ -12,11 +12,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class TokenViewModel(private val getUserTokensUseCase: GetUserTokensUserCase,
-                     private val saveUserTokensUseCase: SaveUserTokensUseCase,
-                     private val deleteUserTokensUseCase: DeleteUserTokensUseCase
+class TokenViewModel(
+    private val getUserTokensUseCase: GetUserTokensUserCase,
+    private val saveUserTokensUseCase: SaveUserTokensUseCase,
+    private val deleteUserTokensUseCase: DeleteUserTokensUseCase
 ): ViewModel() {
-
     private val tokenMutable = MutableLiveData<String?>()
     val token: LiveData<String?> = tokenMutable
 

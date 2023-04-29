@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="http_error">Сервер не отвечает, пожалуйста, попробуйте позже</string>
+    <string name="network_error">Пожалуйста, проверьте подкючение к сети</string>
+    <string name="error">Что-то пошло не так</string>
+    <string name="timeout_error">Истекло время ожидания ответа от сервера, пожалуйста, попробуйте позже</string>
+</resources>

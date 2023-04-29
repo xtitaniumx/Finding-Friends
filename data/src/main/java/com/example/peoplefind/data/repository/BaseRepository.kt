@@ -1,6 +1,7 @@
 package com.example.peoplefind.data.repository
 
 import android.content.Context
+import com.example.peoplefind.data.R
 import com.example.peoplefind.data.api.ErrorResponse
 import com.example.peoplefind.data.api.TokenManager
 import com.example.peoplefind.domain.model.ApiResult
@@ -15,7 +16,7 @@ import retrofit2.HttpException
 import timber.log.Timber
 import java.io.IOException
 
-abstract class BaseRepository(context: Context) {
+abstract class BaseRepository(private val context: Context) {
     protected val tokenManager = TokenManager(context)
 
     fun <T> apiRequestFlow(call: suspend () -> Call<T>): Flow<ApiResult<T>> = flow {
@@ -33,17 +34,36 @@ abstract class BaseRepository(context: Context) {
                     response.errorBody()?.let { error ->
                         error.close()
                         val parsedError: ErrorResponse = Gson().fromJson(error.charStream(), ErrorResponse::class.java)
-                        emit(ApiResult.Failure(parsedError.failureMessage, 400))
+                        emit(ApiResult.Failure(
+                            message = context.resources.getString(R.string.error),
+                            error = parsedError.failureMessage,
+                            code = 400)
+                        )
                     }
                 }
             } catch (e: HttpException) {
-                emit(ApiResult.Failure(errorMessage = e.message ?: "Server doesn't respond, try again later", e.code()))
+                emit(ApiResult.Failure(
+                    message = context.resources.getString(R.string.http_error),
+                    error = e.localizedMessage,
+                    code = e.code())
+                )
             } catch (e: IOException) {
-                emit(ApiResult.Failure(errorMessage = "Please check the network connection", 400))
+                emit(ApiResult.Failure(
+                    message = context.resources.getString(R.string.network_error),
+                    error = e.message,
+                    code = 400)
+                )
             } catch (e: Exception) {
                 Timber.e(e, e.message)
-                emit(ApiResult.Failure(errorMessage = "Something went wrong", 400))
+                emit(ApiResult.Failure(
+                    message = context.resources.getString(R.string.error),
+                    error = e.message,
+                    code = 400)
+                )
             }
-        } ?: emit(ApiResult.Failure("Timeout! Please try again later.", 408))
+        } ?: emit(ApiResult.Failure(
+            message = context.resources.getString(R.string.timeout_error),
+            error = null,
+            code = 408))
     }.flowOn(Dispatchers.IO)
 }

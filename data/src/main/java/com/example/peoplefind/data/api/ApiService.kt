@@ -15,23 +15,23 @@ import retrofit2.http.Path
 
 interface ApiService {
     @POST("/api/v1/User/GetById/{userId}")
-    suspend fun getUserById(@Path("userId") userId: String): Call<UserItem>
+    fun getUserById(@Path("userId") userId: String): Call<UserItem>
 
     @POST("/api/v1/User/GetAccessToken")
-    suspend fun refreshToken(@Body request: RefreshTokenParam): Call<AuthInfo>
+    fun refreshToken(@Body request: RefreshTokenParam): Call<AuthInfo>
 
     @POST("/api/v1/User/Registration")
-    suspend fun registerUser(@Body request: RegisterAccountParam): Call<AuthInfo>
+    fun registerUser(@Body request: RegisterAccountParam): Call<AuthInfo>
 
     @POST("/api/v1/User/Authorization")
-    suspend fun loginUser(@Body request: LoginAccountParam): Call<AuthInfo>
+    fun loginUser(@Body request: LoginAccountParam): Call<AuthInfo>
 
     @POST("/api/v1/User/Logout")
-    suspend fun logoutUser(): Call<Unit>
+    fun logoutUser(): Call<Unit>
 
     @PATCH("/api/v1/User/Update/{userId}")
-    suspend fun updateUserInfo(@Path("userId") userId: String, @Body updateRequest: UpdateAccountInfoParam): Call<Unit>
+    fun updateUserInfo(@Path("userId") userId: String, @Body updateRequest: UpdateAccountInfoParam): Call<Unit>
 
     @PATCH("/api/v1/User/ChangePassword")
-    suspend fun changePassword(@Body changeRequest: ChangePasswordParam): Call<Unit>
+    fun changePassword(@Body changeRequest: ChangePasswordParam): Call<Unit>
 }

@@ -18,8 +18,6 @@ interface UserRepository {
 
     fun loginAccount(param: LoginAccountParam): Flow<ApiResult<AuthInfo>>
 
-
-
     fun saveLoginData(param: SaveLoginDataParam)
 
     fun fetchUserData(param: FetchUserDataParam): String?
