@@ -8,9 +8,10 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.LinearInterpolator
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DiffUtil
 import com.example.peoplefind.databinding.FragmentHomeBinding
 import com.example.peoplefind.domain.model.Address
-import com.example.peoplefind.domain.model.response.UserItem
+import com.example.peoplefind.domain.model.response.User
 import com.example.peoplefind.presentation.adapter.CardUserAdapter
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager
 import com.yuyakaido.android.cardstackview.CardStackListener
@@ -42,7 +43,7 @@ class HomeFragment : Fragment(), CardStackListener, CardUserAdapter.OnClickListe
 
     private fun initView() = with(binding) {
         manager.apply {
-            setStackFrom(StackFrom.None)
+            setStackFrom(StackFrom.Top)
             setVisibleCount(3)
             setTranslationInterval(8.0f)
             setScaleInterval(0.95f)
@@ -50,7 +51,7 @@ class HomeFragment : Fragment(), CardStackListener, CardUserAdapter.OnClickListe
             setMaxDegree(20.0f)
             setDirections(Direction.HORIZONTAL)
             setCanScrollHorizontal(true)
-            setCanScrollVertical(true)
+            setCanScrollVertical(false)
             setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
             setOverlayInterpolator(LinearInterpolator())
         }
@@ -83,38 +84,38 @@ class HomeFragment : Fragment(), CardStackListener, CardUserAdapter.OnClickListe
         }
 
         adapter.submitList(listOf(
-            UserItem("1", "", "", "Владимир", "", "", Address("Владимировосток", "", "", "", "")),
-            UserItem("2", "", "", "Не Владимир", "", "", Address("Владимировосток", "", "", "", "")),
-            UserItem("3", "", "", "Точно не Владимир", "", "", Address("Владимировосток", "", "", "", "")),
-            UserItem("4", "", "", "Совсем не Владимир", "", "", Address("Владимировосток", "", "", "", ""))
+            User("1", "", "", "Владимир", "", "", Address("Владимировосток", "", "", "", "")),
+            User("2", "", "", "Не Владимир", "", "", Address("Владимировосток", "", "", "", "")),
+            User("3", "", "", "Точно не Владимир", "", "", Address("Владимировосток", "", "", "", "")),
+            User("4", "", "", "Совсем не Владимир", "", "", Address("Владимировосток", "", "", "", ""))
         ))
     }
 
-    override fun onCardDragging(direction: Direction?, ratio: Float) {
-
-    }
-
     override fun onCardSwiped(direction: Direction?) {
+        if (manager.topPosition == adapter.itemCount - 3) {
+            binding.skeletonCardUsers.showSkeleton()
+            val oldList = adapter.currentList
+            adapter.submitList(oldList.plus(listOf(
+                User("5", "", "", "Владимир", "", "", Address("Владимировосток", "", "", "", "")),
+                User("6", "", "", "Не Владимир", "", "", Address("Владимировосток", "", "", "", "")),
+                User("7", "", "", "Точно не Владимир", "", "", Address("Владимировосток", "", "", "", "")),
+                User("8", "", "", "Совсем не Владимир", "", "", Address("Владимировосток", "", "", "", ""))
+            )))
+            binding.skeletonCardUsers.showOriginal()
+        }
+    }
+
+    override fun onCardClick(item: User) {
 
     }
 
-    override fun onCardRewound() {
+    override fun onCardDragging(direction: Direction?, ratio: Float) {}
 
-    }
+    override fun onCardRewound() {}
 
-    override fun onCardCanceled() {
+    override fun onCardCanceled() {}
 
-    }
+    override fun onCardAppeared(view: View?, position: Int) {}
 
-    override fun onCardAppeared(view: View?, position: Int) {
-
-    }
-
-    override fun onCardDisappeared(view: View?, position: Int) {
-
-    }
-
-    override fun onCardClick(item: UserItem) {
-
-    }
+    override fun onCardDisappeared(view: View?, position: Int) {}
 }

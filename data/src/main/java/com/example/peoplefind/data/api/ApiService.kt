@@ -6,7 +6,7 @@ import com.example.peoplefind.domain.model.request.RefreshTokenParam
 import com.example.peoplefind.domain.model.request.RegisterAccountParam
 import com.example.peoplefind.domain.model.request.UpdateAccountInfoParam
 import com.example.peoplefind.domain.model.response.AuthInfo
-import com.example.peoplefind.domain.model.response.UserItem
+import com.example.peoplefind.domain.model.response.User
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.PATCH
@@ -15,7 +15,7 @@ import retrofit2.http.Path
 
 interface ApiService {
     @POST("/api/v1/User/GetById/{userId}")
-    fun getUserById(@Path("userId") userId: String): Call<UserItem>
+    fun getUserById(@Path("userId") userId: String): Call<User>
 
     @POST("/api/v1/User/GetAccessToken")
     fun refreshToken(@Body request: RefreshTokenParam): Call<AuthInfo>

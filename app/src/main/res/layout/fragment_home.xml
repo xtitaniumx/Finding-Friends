@@ -7,17 +7,24 @@
     android:orientation="vertical"
     tools:context=".presentation.fragment.HomeFragment">
 
-    <com.yuyakaido.android.cardstackview.CardStackView
-        android:id="@+id/cardUsers"
+    <com.faltenreich.skeletonlayout.SkeletonLayout
+        android:id="@+id/skeletonCardUsers"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
-        android:clipToPadding="false"
-        android:padding="4dp"
         app:layout_constraintBottom_toTopOf="@+id/layoutCardActions"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.yuyakaido.android.cardstackview.CardStackView
+            android:id="@+id/cardUsers"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            android:clipToPadding="false"
+            android:padding="4dp" />
+
+    </com.faltenreich.skeletonlayout.SkeletonLayout>
 
     <LinearLayout
         android:id="@+id/layoutCardActions"
@@ -46,6 +53,6 @@
             android:layout_marginStart="16dp"
             android:background="@drawable/bg_like"
             android:src="@drawable/ic_heart" />
-    </LinearLayout>
 
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,7 +18,7 @@
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navMain"
-        style="@style/BottomNavigationView.Black"
+        style="@style/BottomNavigationView.Inverse"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:itemIconSize="28dp"
