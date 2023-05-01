@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">PeopleFind</string>
 
-    <!-- Main Activity -->
+    <!-- Welcome Activity -->
     <string name="welcome_header">Приложение для расширения круга общения и поиска новых друзей с общими интересами.</string>
     <string name="welcome_description">Вы сможете найти людей рядом с вами, желающих дружить, обмениваться опытом.</string>
     <string name="start_button">Начать</string>
-    <string name="to_login_screen">Я уже <u>зарегистрирован</u></string>
+    <string name="login_from_welcome">Я уже <u>зарегистрирован</u></string>
 
     <!-- Register Activity -->
     <string name="register">Регистрация</string>
@@ -13,7 +13,24 @@
     <string name="birthday">Введите дату рождения</string>
     <string name="password">Придумайте пароль</string>
     <string name="password_confirm">Повторите пароль</string>
-    <string name="register_button">Зарегистрироваться</string>
+    <string name="register_action">Зарегистрироваться</string>
     <string name="register_error">Не удалось зарегистрироваться</string>
     <string name="accept">ОК</string>
+    <string name="login_from_register">Есть аккаунт? <u>Войти</u></string>
+
+    <!-- Login Activity -->
+    <string name="login">Вход</string>
+    <string name="enter_password">Введите пароль</string>
+    <string name="login_action">Войти</string>
+    <string name="login_error">Не удалось войти в аккаунт</string>
+    <string name="restore_password">Забыли пароль? <u>Восстановить</u></string>
+
+    <!-- Restore Activity -->
+    <string name="restore_action">Восстановление</string>
+    <string name="restore_confirm">Подтвердить</string>
+
+    <!-- Main Activity -->
+    <string name="home">Главная</string>
+    <string name="chat">Чат</string>
+    <string name="profile">Профиль</string>
 </resources>

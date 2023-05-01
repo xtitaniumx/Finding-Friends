@@ -1,4 +1,4 @@
-package com.example.peoplefind.presentation
+package com.example.peoplefind.presentation.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

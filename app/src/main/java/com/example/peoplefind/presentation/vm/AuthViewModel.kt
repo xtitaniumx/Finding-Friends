@@ -1,13 +1,18 @@
-package com.example.peoplefind.presentation
+package com.example.peoplefind.presentation.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.peoplefind.domain.model.ApiResult
+import com.example.peoplefind.domain.model.request.LoginAccountParam
 import com.example.peoplefind.domain.model.request.RegisterAccountParam
 import com.example.peoplefind.domain.model.response.AuthInfo
+import com.example.peoplefind.domain.usecase.LoginAccountUseCase
 import com.example.peoplefind.domain.usecase.RegisterAccountUseCase
 
-class RegisterViewModel(private val registerAccountUseCase: RegisterAccountUseCase) : BaseViewModel() {
+class AuthViewModel(
+    private val registerAccountUseCase: RegisterAccountUseCase,
+    private val loginAccountUseCase: LoginAccountUseCase
+) : BaseViewModel() {
     private val authInfoFlowErrorMutable = MutableLiveData<String>()
     val authInfoFlowError: LiveData<String> = authInfoFlowErrorMutable
 
@@ -20,9 +25,18 @@ class RegisterViewModel(private val registerAccountUseCase: RegisterAccountUseCa
         password: String,
         passwordConfirm: String
     ) = baseRequest(authInfoMutable, authInfoFlowErrorMutable) {
-            registerAccountUseCase(
-                RegisterAccountParam(
-                    email, convertDateToServerFormat(birthdate), password, passwordConfirm
+        registerAccountUseCase(
+            RegisterAccountParam(
+                email, convertDateToServerFormat(birthdate), password, passwordConfirm
+            )
+        )
+    }
+
+    fun loginAccount(email: String, password: String) =
+        baseRequest(authInfoMutable, authInfoFlowErrorMutable) {
+            loginAccountUseCase(
+                LoginAccountParam(
+                    email, password
                 )
             )
         }

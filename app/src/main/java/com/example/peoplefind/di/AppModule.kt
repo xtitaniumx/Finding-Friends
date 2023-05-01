@@ -1,14 +1,17 @@
 package com.example.peoplefind.di
 
-import com.example.peoplefind.presentation.RegisterViewModel
-import com.example.peoplefind.presentation.TokenViewModel
-import com.example.peoplefind.presentation.UserDataViewModel
+import com.example.peoplefind.presentation.vm.AuthViewModel
+import com.example.peoplefind.presentation.vm.TokenViewModel
+import com.example.peoplefind.presentation.vm.UserDataViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
     viewModel {
-        RegisterViewModel(registerAccountUseCase = get())
+        AuthViewModel(
+            registerAccountUseCase = get(),
+            loginAccountUseCase = get()
+        )
     }
 
     viewModel {

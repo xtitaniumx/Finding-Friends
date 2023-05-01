@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_auth"
-    tools:context=".presentation.RegisterActivity">
+    android:background="@drawable/bg_restore"
+    tools:context=".presentation.RestoreActivity">
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:fontFamily="@font/manrope_medium"
-                android:text="@string/register"
+                android:text="@string/restore_action"
                 android:textSize="20sp" />
 
             <EditText
@@ -49,17 +49,6 @@
                 android:ems="10"
                 android:hint="@string/email"
                 android:inputType="text|textEmailAddress" />
-
-            <EditText
-                android:id="@+id/editTextBirthdate"
-                style="@style/EditText.Auth"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:autofillHints=""
-                android:ems="10"
-                android:hint="@string/birthday"
-                android:inputType="datetime|date" />
 
             <EditText
                 android:id="@+id/editTextPassword"
@@ -84,32 +73,23 @@
                 android:inputType="text|textPassword" />
 
             <com.faltenreich.skeletonlayout.SkeletonLayout
-                android:id="@+id/skeletonRegister"
+                android:id="@+id/skeletonRestore"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/buttonRegister"
+                    android:id="@+id/buttonConfirmRestore"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:background="@drawable/bg_button"
                     android:fontFamily="@font/manrope_bold"
-                    android:text="@string/register_action"
+                    android:text="@string/restore_confirm"
                     android:textSize="14sp" />
 
             </com.faltenreich.skeletonlayout.SkeletonLayout>
 
-            <TextView
-                android:id="@+id/textLogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/manrope_regular"
-                android:text="@string/login_from_register"
-                android:textAlignment="center"
-                android:textSize="14sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
