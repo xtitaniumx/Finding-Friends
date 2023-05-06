@@ -1,5 +1,6 @@
 package com.example.peoplefind.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,6 +38,11 @@ class ChatActivity : AppCompatActivity() {
                 Message(owner = 1, "Как дела?", "15:25")
             )
         )
+
+        buttonMeet.setOnClickListener {
+            val intent = Intent(this@ChatActivity, MeetActivity::class.java)
+            startActivity(intent)
+        }
 
         buttonSendMessage.setOnClickListener {
             if (editTextMessage.text.isEmpty()) return@setOnClickListener

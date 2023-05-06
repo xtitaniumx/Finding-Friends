@@ -41,7 +41,7 @@
 
             <EditText
                 android:id="@+id/editTextEmail"
-                style="@style/EditText.Auth"
+                style="@style/EditText.Themed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -52,7 +52,7 @@
 
             <EditText
                 android:id="@+id/editTextPassword"
-                style="@style/EditText.Auth"
+                style="@style/EditText.Themed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -63,7 +63,7 @@
 
             <EditText
                 android:id="@+id/editTextPasswordConfirm"
-                style="@style/EditText.Auth"
+                style="@style/EditText.Themed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"

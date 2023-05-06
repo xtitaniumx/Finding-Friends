@@ -39,7 +39,7 @@
         <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
-    <style name="EditText.Auth" parent="Widget.AppCompat.EditText">
+    <style name="EditText.Themed" parent="Widget.AppCompat.EditText">
         <item name="android:background">@drawable/bg_edit_text</item>
         <item name="android:backgroundTint">@color/edit_text</item>
         <item name="android:fontFamily">@font/rubik_light</item>
