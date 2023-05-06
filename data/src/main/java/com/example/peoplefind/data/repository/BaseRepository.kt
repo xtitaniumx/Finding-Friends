@@ -19,7 +19,7 @@ import java.io.IOException
 abstract class BaseRepository(private val context: Context) {
     protected val tokenManager = TokenManager(context)
 
-    fun <T> apiRequestFlow(call: suspend () -> Call<T>): Flow<ApiResult<T>> = flow {
+    fun <D> apiRequestFlow(call: suspend () -> Call<D>): Flow<ApiResult<D>> = flow {
         emit(ApiResult.Loading)
 
         withTimeoutOrNull(20000L) {

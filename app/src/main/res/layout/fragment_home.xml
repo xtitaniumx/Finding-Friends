@@ -14,15 +14,14 @@
         app:layout_constraintBottom_toTopOf="@+id/layoutCardActions"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:shimmerColor="@color/black">
 
         <com.yuyakaido.android.cardstackview.CardStackView
             android:id="@+id/cardUsers"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="16dp"
-            android:clipToPadding="false"
-            android:padding="4dp" />
+            android:layout_marginTop="16dp" />
 
     </com.faltenreich.skeletonlayout.SkeletonLayout>
 

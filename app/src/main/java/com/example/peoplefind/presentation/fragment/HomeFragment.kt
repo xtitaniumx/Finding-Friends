@@ -1,5 +1,6 @@
 package com.example.peoplefind.presentation.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,10 +9,10 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.LinearInterpolator
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.DiffUtil
 import com.example.peoplefind.databinding.FragmentHomeBinding
 import com.example.peoplefind.domain.model.Address
 import com.example.peoplefind.domain.model.response.User
+import com.example.peoplefind.presentation.AboutUserCardActivity
 import com.example.peoplefind.presentation.adapter.CardUserAdapter
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager
 import com.yuyakaido.android.cardstackview.CardStackListener
@@ -22,7 +23,6 @@ import com.yuyakaido.android.cardstackview.SwipeAnimationSetting
 import com.yuyakaido.android.cardstackview.SwipeableMethod
 
 class HomeFragment : Fragment(), CardStackListener, CardUserAdapter.OnClickListener {
-    private val manager by lazy { CardStackLayoutManager(requireActivity(), this) }
     private val adapter by lazy { CardUserAdapter(this) }
     private lateinit var binding: FragmentHomeBinding
 
@@ -42,30 +42,35 @@ class HomeFragment : Fragment(), CardStackListener, CardUserAdapter.OnClickListe
     }
 
     private fun initView() = with(binding) {
+        val manager = CardStackLayoutManager(requireActivity(), this@HomeFragment)
+
         manager.apply {
-            setStackFrom(StackFrom.Top)
+            setStackFrom(StackFrom.None)
             setVisibleCount(3)
             setTranslationInterval(8.0f)
             setScaleInterval(0.95f)
             setSwipeThreshold(0.3f)
             setMaxDegree(20.0f)
-            setDirections(Direction.HORIZONTAL)
-            setCanScrollHorizontal(true)
-            setCanScrollVertical(false)
+            setDirections(Direction.VERTICAL)
+            setCanScrollHorizontal(false)
+            setCanScrollVertical(true)
             setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
             setOverlayInterpolator(LinearInterpolator())
         }
-        cardUsers.layoutManager = manager
-        cardUsers.adapter = adapter
-        cardUsers.itemAnimator.apply {
-            if (this is DefaultItemAnimator) {
-                supportsChangeAnimations = false
+
+        if (cardUsers.layoutManager == null) {
+            cardUsers.layoutManager = manager
+            cardUsers.adapter = adapter
+            cardUsers.itemAnimator.apply {
+                if (this is DefaultItemAnimator) {
+                    supportsChangeAnimations = false
+                }
             }
         }
 
         buttonSkip.setOnClickListener {
             val setting = SwipeAnimationSetting.Builder()
-                .setDirection(Direction.Left)
+                .setDirection(Direction.Bottom)
                 .setDuration(Duration.Normal.duration)
                 .setInterpolator(AccelerateInterpolator())
                 .build()
@@ -83,17 +88,19 @@ class HomeFragment : Fragment(), CardStackListener, CardUserAdapter.OnClickListe
             cardUsers.swipe()
         }
 
-        adapter.submitList(listOf(
-            User("1", "", "", "Владимир", "", "", Address("Владимировосток", "", "", "", "")),
-            User("2", "", "", "Не Владимир", "", "", Address("Владимировосток", "", "", "", "")),
-            User("3", "", "", "Точно не Владимир", "", "", Address("Владимировосток", "", "", "", "")),
-            User("4", "", "", "Совсем не Владимир", "", "", Address("Владимировосток", "", "", "", ""))
-        ))
+        if (adapter.currentList.size == 0) {
+            adapter.submitList(listOf(
+                User("1", "", "", "Владимир", "", "", Address("Владимировосток", "", "", "", "")),
+                User("2", "", "", "Не Владимир", "", "", Address("Владимировосток", "", "", "", "")),
+                User("3", "", "", "Точно не Владимир", "", "", Address("Владимировосток", "", "", "", "")),
+                User("4", "", "", "Совсем не Владимир", "", "", Address("Владимировосток", "", "", "", ""))
+            ))
+        }
     }
 
     override fun onCardSwiped(direction: Direction?) {
-        if (manager.topPosition == adapter.itemCount - 3) {
-            binding.skeletonCardUsers.showSkeleton()
+        if ((binding.cardUsers.layoutManager as CardStackLayoutManager).topPosition == adapter.itemCount - 2) {
+            //binding.skeletonCardUsers.showSkeleton()
             val oldList = adapter.currentList
             adapter.submitList(oldList.plus(listOf(
                 User("5", "", "", "Владимир", "", "", Address("Владимировосток", "", "", "", "")),
@@ -101,12 +108,13 @@ class HomeFragment : Fragment(), CardStackListener, CardUserAdapter.OnClickListe
                 User("7", "", "", "Точно не Владимир", "", "", Address("Владимировосток", "", "", "", "")),
                 User("8", "", "", "Совсем не Владимир", "", "", Address("Владимировосток", "", "", "", ""))
             )))
-            binding.skeletonCardUsers.showOriginal()
+            //binding.skeletonCardUsers.showOriginal()
         }
     }
 
     override fun onCardClick(item: User) {
-
+        val intent = Intent(requireActivity(), AboutUserCardActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onCardDragging(direction: Direction?, ratio: Float) {}

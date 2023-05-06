@@ -15,6 +15,9 @@
         android:theme="@style/Theme.PeopleFind"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.AboutUserCardActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.RestoreActivity"
             android:exported="false" />
         <activity
