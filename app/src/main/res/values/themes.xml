@@ -46,6 +46,13 @@
         <item name="android:textSize">15sp</item>
     </style>
 
+    <style name="EditText.EnterMessage" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/bg_edit_text_enter_message</item>
+        <item name="android:backgroundTint">@color/edit_text</item>
+        <item name="android:fontFamily">@font/rubik_regular</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <style name="ImageView.Round" parent="">
         <item name="cornerSize">50%</item>
         <item name="cornerFamily">rounded</item>

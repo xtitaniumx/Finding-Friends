@@ -1,5 +1,6 @@
 package com.example.peoplefind.presentation.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.peoplefind.R
 import com.example.peoplefind.databinding.FragmentMessengerBinding
 import com.example.peoplefind.domain.model.response.Chat
+import com.example.peoplefind.presentation.ChatActivity
 import com.example.peoplefind.presentation.adapter.ChatAdapter
 
 class MessengerFragment : Fragment(), ChatAdapter.OnClickListener {
@@ -44,9 +46,14 @@ class MessengerFragment : Fragment(), ChatAdapter.OnClickListener {
             )
         )
 
+
     }
 
     override fun onChatClick(item: Chat) {
-
+        val intent = Intent(requireActivity(), ChatActivity::class.java).apply {
+            putExtra("ChatUser", item.userName)
+            putExtra("ChatUserImage", item.userImage)
+        }
+        startActivity(intent)
     }
 }
