@@ -33,6 +33,35 @@
     <string name="home">Главная</string>
     <string name="chat">Чат</string>
     <string name="profile">Профиль</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- HomeFragment -->
+    <string name="dislike_questionnaire">Отложить анкету</string>
+    <string name="like_questionnaire">Лайкнуть анкету</string>
+    <string name="list_questionnaire">Список анкет пользователей</string>
+
+    <!-- About User Card Activity -->
+    <string name="interests">Интересы</string>
+    <string name="about_myself">О себе</string>
+
+    <!-- Messenger Fragment -->
+    <string name="messages">Сообщения</string>
+    <string name="search_chat">Найти чат</string>
+
+    <!-- Chat Activity -->
+    <string name="go_back">Перейти назад</string>
+    <string name="meet">Встреча</string>
+    <string name="clip_to_message">Прикрепить к сообщению</string>
+    <string name="message">Сообщение</string>
+    <string name="send_message">Отправить сообщение</string>
+
+    <!-- Meet Activity -->
+    <string name="create_meet">Организовать встречу</string>
+    <string name="date_time">Дата и время</string>
+    <string name="think_date_time">Придумайте дату и время</string>
+    <string name="meet_place">Место проведения встречи</string>
+    <string name="think_place">Придумайте место проведения</string>
+    <string name="meet_goal">Цель встречи</string>
+    <string name="think_goal">Придумайте цель проведения</string>
+    <string name="meet_confirm">Подтвердить</string>
+
 </resources>

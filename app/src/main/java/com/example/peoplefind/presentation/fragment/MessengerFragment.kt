@@ -45,8 +45,6 @@ class MessengerFragment : Fragment(), ChatAdapter.OnClickListener {
                 Chat("3", "Точно Не Владимир", R.drawable.sample_card, "Hi!")
             )
         )
-
-
     }
 
     override fun onChatClick(item: Chat) {

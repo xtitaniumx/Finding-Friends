@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:fontFamily="@font/inter_bold"
-            android:text="Организовать встречу"
+            android:text="@string/create_meet"
             android:textSize="20sp" />
 
         <TextView
@@ -36,7 +36,7 @@
             android:layout_marginTop="24dp"
             android:layout_marginEnd="4dp"
             android:fontFamily="@font/inter_medium"
-            android:text="Дата и время"
+            android:text="@string/date_time"
             android:textSize="16sp" />
 
         <EditText
@@ -46,8 +46,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ems="10"
-            android:hint="Придумайте дату и время"
-            android:inputType="text" />
+            android:hint="@string/think_date_time"
+            android:inputType="datetime"
+            android:importantForAutofill="no" />
 
         <TextView
             android:layout_width="match_parent"
@@ -56,7 +57,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="4dp"
             android:fontFamily="@font/inter_medium"
-            android:text="Место проведения встречи"
+            android:text="@string/meet_place"
             android:textSize="16sp" />
 
         <EditText
@@ -66,8 +67,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ems="10"
-            android:hint="Придумайте место проведения"
-            android:inputType="text" />
+            android:hint="@string/think_place"
+            android:inputType="text"
+            android:importantForAutofill="no" />
 
         <TextView
             android:layout_width="match_parent"
@@ -76,7 +78,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="4dp"
             android:fontFamily="@font/inter_medium"
-            android:text="Цель встречи"
+            android:text="@string/meet_goal"
             android:textSize="16sp" />
 
         <EditText
@@ -86,8 +88,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ems="10"
-            android:hint="Придумайте цель проведения"
-            android:inputType="text" />
+            android:hint="@string/think_goal"
+            android:inputType="text"
+            android:importantForAutofill="no" />
 
         <Button
             android:id="@+id/buttonCreateMeet"
@@ -97,7 +100,7 @@
             android:layout_marginTop="24dp"
             android:background="@drawable/bg_button"
             android:fontFamily="@font/inter_medium"
-            android:text="Подтвердить" />
+            android:text="@string/meet_confirm" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

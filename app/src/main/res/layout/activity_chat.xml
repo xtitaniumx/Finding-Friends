@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:background="@null"
+            android:contentDescription="@string/go_back"
             android:padding="8dp"
             app:srcCompat="@drawable/ic_back" />
 
@@ -64,8 +65,8 @@
         android:id="@+id/layoutSendMessage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
         android:orientation="horizontal"
-        android:paddingStart="2dp"
         android:paddingTop="6dp"
         android:paddingBottom="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -76,26 +77,47 @@
             android:id="@+id/buttonMeet"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_gravity="bottom"
+            android:layout_gravity="end"
             android:background="@null"
+            android:contentDescription="@string/create_meet"
             android:padding="8dp"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/ic_meet" />
 
-        <EditText
-            android:id="@+id/editTextMessage"
-            style="@style/EditText.EnterMessage"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="-1dp"
-            android:layout_weight="1"
-            android:autofillHints=""
-            android:drawableEnd="@drawable/ic_clip"
-            android:drawablePadding="6dp"
-            android:ems="10"
-            android:hint="Сообщение"
-            android:inputType="text" />
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/editTextMessage"
+                style="@style/EditText.EnterMessage"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:drawablePadding="6dp"
+                android:ems="10"
+                android:hint="@string/message"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/buttonClipToMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:contentDescription="@string/clip_to_message"
+                android:padding="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/editTextMessage"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_clip" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageButton
             android:id="@+id/buttonSendMessage"
@@ -103,7 +125,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="@null"
+            android:contentDescription="@string/send_message"
             android:padding="8dp"
             app:srcCompat="@drawable/ic_send" />
+
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

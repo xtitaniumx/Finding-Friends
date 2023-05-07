@@ -21,7 +21,8 @@
             android:id="@+id/cardUsers"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/list_questionnaire" />
 
     </com.faltenreich.skeletonlayout.SkeletonLayout>
 
@@ -43,7 +44,8 @@
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="24dp"
             android:background="@drawable/bg_skip"
-            android:src="@drawable/ic_skip" />
+            android:src="@drawable/ic_skip"
+            android:contentDescription="@string/dislike_questionnaire" />
 
         <ImageButton
             android:id="@+id/buttonLike"
@@ -51,7 +53,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:background="@drawable/bg_like"
-            android:src="@drawable/ic_heart" />
+            android:src="@drawable/ic_heart"
+            android:contentDescription="@string/like_questionnaire" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,8 +1,7 @@
 package com.example.peoplefind.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.peoplefind.R
+import androidx.appcompat.app.AppCompatActivity
 import com.example.peoplefind.databinding.ActivityAboutUserCardBinding
 
 class AboutUserCardActivity : AppCompatActivity() {
@@ -17,5 +16,8 @@ class AboutUserCardActivity : AppCompatActivity() {
 
     private fun initView() = with(binding) {
         buttonBack.setOnClickListener { finish() }
+
+        textProfileInfo.text = intent.getStringExtra("UserName")
+        textLocation.text = intent.getStringExtra("UserCity")
     }
 }

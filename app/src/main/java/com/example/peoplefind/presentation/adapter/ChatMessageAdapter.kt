@@ -11,18 +11,28 @@ import com.example.peoplefind.databinding.ItemMessageBinding
 import com.example.peoplefind.databinding.ItemMessageDateBinding
 import com.example.peoplefind.databinding.ItemMessageMeetBinding
 import com.example.peoplefind.databinding.ItemOwnMessageBinding
+import com.example.peoplefind.databinding.ItemOwnMessageMeetBinding
 import com.example.peoplefind.domain.model.response.ChatMessage
 import com.example.peoplefind.domain.model.response.DateMessage
 import com.example.peoplefind.domain.model.response.MeetMessage
 import com.example.peoplefind.domain.model.response.Message
 
-class ChatMessageAdapter : ListAdapter<ChatMessage, ChatMessageAdapter.Holder>(Comparator()) {
+class ChatMessageAdapter(
+    private val meetMessageListener: OnMeetClickListener
+) : ListAdapter<ChatMessage, ChatMessageAdapter.Holder>(Comparator()) {
+
     companion object {
         private const val VIEW_TYPE_MESSAGE = 0
         private const val VIEW_TYPE_OWN_MESSAGE = 1
         private const val VIEW_TYPE_DATE_MESSAGE = 2
         private const val VIEW_TYPE_MEET_MESSAGE = 3
         private const val VIEW_TYPE_OWN_MEET_MESSAGE = 4
+    }
+
+    interface OnMeetClickListener {
+        fun onMeetAcceptClick()
+
+        fun onMeetRejectClick()
     }
 
     abstract class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -58,17 +68,38 @@ class ChatMessageAdapter : ListAdapter<ChatMessage, ChatMessageAdapter.Holder>(C
         }
     }
 
-    class MeetMessageHolder(itemView: View) : Holder(itemView) {
+    class MeetMessageHolder(itemView: View, listener: OnMeetClickListener) : Holder(itemView) {
         private val binding = ItemMessageMeetBinding.bind(itemView)
+        private lateinit var meetMessageItem: MeetMessage
+
+        init {
+            binding.buttonAccept.setOnClickListener {
+                listener.onMeetAcceptClick()
+            }
+            binding.buttonReject.setOnClickListener {
+                listener.onMeetRejectClick()
+            }
+        }
 
         override fun bind(item: ChatMessage) = with(binding) {
-            val meetMessageItem = item as MeetMessage
+            meetMessageItem = item as MeetMessage
+            textInviteUser.text = meetMessageItem.inviteUser
+            textMeetDate.text = meetMessageItem.date
+            textMeetPlace.text = meetMessageItem.place
+            textMeetGoal.text = meetMessageItem.goal
+            textMessageTime.text = meetMessageItem.time
         }
     }
 
     class OwnMeetMessageHolder(itemView: View) : Holder(itemView) {
-        override fun bind(item: ChatMessage) {
-            TODO("Not yet implemented")
+        private val binding = ItemOwnMessageMeetBinding.bind(itemView)
+
+        override fun bind(item: ChatMessage) = with(binding) {
+            val ownMeetMessageItem = item as MeetMessage
+            textMeetDate.text = ownMeetMessageItem.date
+            textMeetPlace.text = ownMeetMessageItem.place
+            textMeetGoal.text = ownMeetMessageItem.goal
+            textMessageTime.text = ownMeetMessageItem.time
         }
     }
 
@@ -90,7 +121,10 @@ class ChatMessageAdapter : ListAdapter<ChatMessage, ChatMessageAdapter.Holder>(C
                 if (item.owner == 1) return VIEW_TYPE_OWN_MESSAGE
             }
             is DateMessage -> return VIEW_TYPE_DATE_MESSAGE
-            is MeetMessage -> return VIEW_TYPE_MEET_MESSAGE
+            is MeetMessage -> {
+                if (item.owner == 0) return VIEW_TYPE_MEET_MESSAGE
+                if (item.owner == 1) return VIEW_TYPE_OWN_MEET_MESSAGE
+            }
         }
         return VIEW_TYPE_MESSAGE
     }
@@ -112,7 +146,11 @@ class ChatMessageAdapter : ListAdapter<ChatMessage, ChatMessageAdapter.Holder>(C
             }
             VIEW_TYPE_MEET_MESSAGE -> {
                 val view = inflater.inflate(R.layout.item_message_meet, parent, false)
-                return MeetMessageHolder(view)
+                return MeetMessageHolder(view, meetMessageListener)
+            }
+            VIEW_TYPE_OWN_MEET_MESSAGE -> {
+                val view = inflater.inflate(R.layout.item_own_message_meet, parent, false)
+                return OwnMeetMessageHolder(view)
             }
         }
         val view = inflater.inflate(R.layout.item_own_message, parent, false)

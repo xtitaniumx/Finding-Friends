@@ -7,11 +7,13 @@ import com.example.peoplefind.R
 import com.example.peoplefind.databinding.ActivityMainBinding
 import com.example.peoplefind.presentation.fragment.HomeFragment
 import com.example.peoplefind.presentation.fragment.MessengerFragment
+import com.example.peoplefind.presentation.fragment.ProfileFragment
 
 class MainActivity : AppCompatActivity() {
     private val fragmentManager by lazy { supportFragmentManager }
     private val homeFragment by lazy { HomeFragment.newInstance() }
     private val messengerFragment by lazy { MessengerFragment.newInstance() }
+    private val profileFragment by lazy { ProfileFragment.newInstance() }
     private lateinit var activeFragment: Fragment
     private lateinit var binding: ActivityMainBinding
 
@@ -36,7 +38,8 @@ class MainActivity : AppCompatActivity() {
                     return@setOnItemSelectedListener true
                 }
                 R.id.menuProfile -> {
-                    return@setOnItemSelectedListener false
+                    openFragment(profileFragment)
+                    return@setOnItemSelectedListener true
                 }
                 else -> return@setOnItemSelectedListener false
             }

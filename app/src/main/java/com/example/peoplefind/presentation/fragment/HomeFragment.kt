@@ -113,7 +113,10 @@ class HomeFragment : Fragment(), CardStackListener, CardUserAdapter.OnClickListe
     }
 
     override fun onCardClick(item: User) {
-        val intent = Intent(requireActivity(), AboutUserCardActivity::class.java)
+        val intent = Intent(requireActivity(), AboutUserCardActivity::class.java).apply {
+            putExtra("UserName", item.name)
+            putExtra("UserCity", item.address.city)
+        }
         startActivity(intent)
     }
 
