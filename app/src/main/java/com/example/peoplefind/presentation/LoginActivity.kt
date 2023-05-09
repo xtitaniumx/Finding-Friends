@@ -29,7 +29,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun initView() = with(binding) {
         buttonLogin.setOnClickListener {
-            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+            val intent = Intent(this@LoginActivity, QuestionnaireActivity::class.java)
             startActivity(intent)
             /*authViewModel.loginAccount(
                 email = editTextEmail.text.toString(),
@@ -53,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
                 userDataViewModel.saveUserData(
                     userId = it.userId, loginState = false
                 )
-                val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                val intent = Intent(this@LoginActivity, QuestionnaireActivity::class.java)
                 startActivity(intent)
             }.onFailure { message, error ->
                 skeletonLogin.showOriginal()

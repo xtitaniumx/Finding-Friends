@@ -32,7 +32,7 @@ class ChatMessageAdapter(
     interface OnMeetClickListener {
         fun onMeetAcceptClick()
 
-        fun onMeetRejectClick()
+        fun onMeetRejectClick(item: MeetMessage)
     }
 
     abstract class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -77,7 +77,7 @@ class ChatMessageAdapter(
                 listener.onMeetAcceptClick()
             }
             binding.buttonReject.setOnClickListener {
-                listener.onMeetRejectClick()
+                listener.onMeetRejectClick(meetMessageItem)
             }
         }
 
@@ -91,11 +91,18 @@ class ChatMessageAdapter(
         }
     }
 
-    class OwnMeetMessageHolder(itemView: View) : Holder(itemView) {
+    class OwnMeetMessageHolder(itemView: View, listener: OnMeetClickListener) : Holder(itemView) {
         private val binding = ItemOwnMessageMeetBinding.bind(itemView)
+        private lateinit var ownMeetMessageItem: MeetMessage
+
+        init {
+            binding.buttonCancel.setOnClickListener {
+                listener.onMeetRejectClick(ownMeetMessageItem)
+            }
+        }
 
         override fun bind(item: ChatMessage) = with(binding) {
-            val ownMeetMessageItem = item as MeetMessage
+            ownMeetMessageItem = item as MeetMessage
             textMeetDate.text = ownMeetMessageItem.date
             textMeetPlace.text = ownMeetMessageItem.place
             textMeetGoal.text = ownMeetMessageItem.goal
@@ -150,7 +157,7 @@ class ChatMessageAdapter(
             }
             VIEW_TYPE_OWN_MEET_MESSAGE -> {
                 val view = inflater.inflate(R.layout.item_own_message_meet, parent, false)
-                return OwnMeetMessageHolder(view)
+                return OwnMeetMessageHolder(view, meetMessageListener)
             }
         }
         val view = inflater.inflate(R.layout.item_own_message, parent, false)

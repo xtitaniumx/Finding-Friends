@@ -53,7 +53,7 @@ class RegisterActivity : AppCompatActivity() {
                 userDataViewModel.saveUserData(
                     userId = it.userId, loginState = false
                 )
-                val intent = Intent(this@RegisterActivity, MainActivity::class.java)
+                val intent = Intent(this@RegisterActivity, QuestionnaireActivity::class.java)
                 startActivity(intent)
             }.onFailure { message, error ->
                 skeletonRegister.showOriginal()

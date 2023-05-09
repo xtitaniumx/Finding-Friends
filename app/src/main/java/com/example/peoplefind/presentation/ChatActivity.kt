@@ -7,6 +7,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.peoplefind.databinding.ActivityChatBinding
+import com.example.peoplefind.domain.model.response.ChatMessage
 import com.example.peoplefind.domain.model.response.DateMessage
 import com.example.peoplefind.domain.model.response.MeetMessage
 import com.example.peoplefind.domain.model.response.Message
@@ -82,7 +83,11 @@ class ChatActivity : AppCompatActivity(), ChatMessageAdapter.OnMeetClickListener
 
     }
 
-    override fun onMeetRejectClick() {
-
+    override fun onMeetRejectClick(item: MeetMessage) {
+        val list = chatMessageAdapter.currentList.toMutableList().apply {
+            remove(item)
+        }
+        val newList = ArrayList<ChatMessage>()
+        chatMessageAdapter.submitList(newList.plus(list))
     }
 }
