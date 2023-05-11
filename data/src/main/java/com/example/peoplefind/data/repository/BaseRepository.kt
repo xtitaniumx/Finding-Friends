@@ -17,7 +17,7 @@ import timber.log.Timber
 import java.io.IOException
 
 abstract class BaseRepository(private val context: Context) {
-    protected val tokenManager = TokenManager(context)
+    val tokenManager = TokenManager(context)
 
     fun <D> apiRequestFlow(call: suspend () -> Call<D>): Flow<ApiResult<D>> = flow {
         emit(ApiResult.Loading)
