@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_bold"
-            android:text="Добро пожаловать!"
+            android:text="@string/welcome"
             android:textAlignment="center"
             android:textColor="?attr/colorOnPrimary"
             android:textSize="20sp" />
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:fontFamily="@font/inter_medium"
-            android:text="Пожалуйста, заполните анкету"
+            android:text="@string/fill_questionnaire"
             android:textAlignment="center"
             android:textColor="?attr/colorOnPrimary"
             android:textSize="18sp" />
@@ -70,7 +70,7 @@
                         android:layout_marginStart="4dp"
                         android:layout_marginEnd="4dp"
                         android:fontFamily="@font/inter_medium"
-                        android:text="Как Вас зовут?"
+                        android:text="@string/name_question"
                         android:textSize="16sp" />
 
                     <EditText
@@ -80,7 +80,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:ems="10"
-                        android:hint="Укажите ваше имя"
+                        android:hint="@string/enter_name"
                         android:importantForAutofill="no"
                         android:inputType="text" />
 
@@ -91,7 +91,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="4dp"
                         android:fontFamily="@font/inter_medium"
-                        android:text="Какого Вы пола?"
+                        android:text="@string/gender_question"
                         android:textSize="16sp" />
 
                     <EditText
@@ -101,7 +101,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:ems="10"
-                        android:hint="Укажите ваш пол"
+                        android:hint="@string/enter_gender"
                         android:importantForAutofill="no"
                         android:inputType="text" />
 
@@ -112,7 +112,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="4dp"
                         android:fontFamily="@font/inter_medium"
-                        android:text="Сколько Вам лет?"
+                        android:text="@string/age_question"
                         android:textSize="16sp" />
 
                     <EditText
@@ -122,7 +122,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:ems="10"
-                        android:hint="Укажите ваш возраст"
+                        android:hint="@string/enter_age"
                         android:importantForAutofill="no"
                         android:inputType="text" />
 
@@ -133,7 +133,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="4dp"
                         android:fontFamily="@font/inter_medium"
-                        android:text="Какие у Вас интересы?"
+                        android:text="@string/interests_question"
                         android:textSize="16sp" />
 
                     <EditText
@@ -143,7 +143,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:ems="10"
-                        android:hint="Укажите ваши интересы"
+                        android:hint="@string/enter_interests"
                         android:importantForAutofill="no"
                         android:inputType="text" />
 
@@ -154,7 +154,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="4dp"
                         android:fontFamily="@font/inter_medium"
-                        android:text="В какой сфере Вы работаете или учитесь?"
+                        android:text="@string/study_question"
                         android:textSize="16sp" />
 
                     <EditText
@@ -164,7 +164,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:ems="10"
-                        android:hint="Укажите ваше место учебы/работы"
+                        android:hint="@string/enter_study"
                         android:importantForAutofill="no"
                         android:inputType="text" />
 
@@ -175,7 +175,7 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="4dp"
                         android:fontFamily="@font/inter_medium"
-                        android:text="В каком городе Вы живете?"
+                        android:text="@string/city_question"
                         android:textSize="16sp" />
 
                     <EditText
@@ -185,7 +185,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:ems="10"
-                        android:hint="Укажите город проживания"
+                        android:hint="@string/enter_city"
                         android:importantForAutofill="no"
                         android:inputType="text" />
 
@@ -203,7 +203,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
         android:fontFamily="@font/inter_regular"
-        android:text="Эти данные можно изменить в профиле"
+        android:text="@string/data_change"
         android:textColor="@color/edit_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -219,7 +219,7 @@
         android:layout_marginBottom="4dp"
         android:background="@drawable/bg_button"
         android:fontFamily="@font/inter_medium"
-        android:text="Далее"
+        android:text="@string/next_action"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/textQuestionnaireNotice"
         app:layout_constraintEnd_toEndOf="parent"

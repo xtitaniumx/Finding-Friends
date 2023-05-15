@@ -104,22 +104,7 @@
                 <com.google.android.material.chip.ChipGroup
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:singleLine="true">
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chip"
-                        style="@style/Chip.Themed"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Еда" />
-
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chip2"
-                        style="@style/Chip.Themed"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Прогулка" />
-                </com.google.android.material.chip.ChipGroup>
+                    app:singleLine="true"/>
 
             </HorizontalScrollView>
 
@@ -144,10 +129,10 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:fontFamily="@font/manrope_medium"
-                android:text="Путешественник, люблю играть в игры. Также занимаюсь кемпингом."
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textAboutMe" />
+                app:layout_constraintTop_toBottomOf="@+id/textAboutMe"
+                tools:text="Путешественник, люблю играть в игры. Также занимаюсь кемпингом." />
 
         </LinearLayout>
     </ScrollView>

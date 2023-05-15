@@ -29,6 +29,29 @@
     <string name="restore_action">Восстановление</string>
     <string name="restore_confirm">Подтвердить</string>
 
+    <!-- Questionnaire, Change Questionnaire Activity -->
+    <string name="enter_name">Укажите ваше имя</string>
+    <string name="enter_gender">Укажите ваш пол</string>
+    <string name="enter_age">Укажите ваш возраст</string>
+    <string name="enter_interests">Укажите ваши интересы</string>
+    <string name="enter_study">Укажите ваше место учебы или работы</string>
+    <string name="enter_city">Укажите город проживания</string>
+
+    <!-- Questionnaire Activity -->
+    <string name="welcome">Добро пожаловать!</string>
+    <string name="fill_questionnaire">Пожалуйста, заполните анкету</string>
+    <string name="name_question">Как Вас зовут?</string>
+    <string name="gender_question">Какого Вы пола?</string>
+    <string name="age_question">Сколько Вам лет?</string>
+    <string name="interests_question">Какие у Вас интересы?</string>
+    <string name="study_question">В какой сфере Вы работаете или учитесь?</string>
+    <string name="city_question">В каком городе Вы живете?</string>
+    <string name="next_action">Далее</string>
+    <string name="data_change">Эти данные можно изменить в профиле</string>
+
+    <!-- Change Questionnaire, About User Card Activity -->
+    <string name="interests">Интересы</string>
+
     <!-- Main Activity -->
     <string name="home">Главная</string>
     <string name="chat">Чат</string>
@@ -40,7 +63,6 @@
     <string name="list_questionnaire">Список анкет пользователей</string>
 
     <!-- About User Card Activity -->
-    <string name="interests">Интересы</string>
     <string name="about_myself">О себе</string>
 
     <!-- Messenger Fragment -->
@@ -64,4 +86,16 @@
     <string name="think_goal">Придумайте цель проведения</string>
     <string name="meet_confirm">Подтвердить</string>
 
+    <!-- Profile Fragment -->
+    <string name="change_questionnaire_action">Изменить анкету</string>
+    <string name="change_password_action">Изменить пароль</string>
+    <string name="log_out_action">Выйти из аккаунта</string>
+
+    <!-- Change Questionnaire Activity -->
+    <string name="changing_questionnaire">Изменение анкеты</string>
+    <string name="name">Имя</string>
+    <string name="gender">Пол</string>
+    <string name="age">Возраст</string>
+    <string name="study">Сфера работы или учебы</string>
+    <string name="city">Город проживания</string>
 </resources>
