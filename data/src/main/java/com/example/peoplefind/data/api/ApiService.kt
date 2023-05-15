@@ -1,19 +1,26 @@
 package com.example.peoplefind.data.api
 
 import com.example.peoplefind.domain.model.request.ChangePasswordParam
+import com.example.peoplefind.domain.model.request.CreateQuestionnaireParam
 import com.example.peoplefind.domain.model.request.LoginAccountParam
+import com.example.peoplefind.domain.model.request.PutAQuestionnaireGradeParam
 import com.example.peoplefind.domain.model.request.RefreshTokenParam
 import com.example.peoplefind.domain.model.request.RegisterAccountParam
 import com.example.peoplefind.domain.model.request.UpdateAccountInfoParam
+import com.example.peoplefind.domain.model.request.UpdateQuestionnaireParam
 import com.example.peoplefind.domain.model.response.AuthInfo
 import com.example.peoplefind.domain.model.response.User
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface ApiService {
+    /**
+     * User requests
+     */
     @POST("/api/v1/User/GetById/{userId}")
     fun getUserById(@Path("userId") userId: String): Call<User>
 
@@ -34,4 +41,31 @@ interface ApiService {
 
     @PATCH("/api/v1/User/ChangePassword")
     fun changePassword(@Body changeRequest: ChangePasswordParam): Call<Unit>
+
+    /**
+     * Questionnaire requests
+     */
+    @GET("/api/v1/Questionnare/GetRecommendations")
+    fun getRecommendations(): Call<Unit>
+
+    @GET("/api/v1/Questionnare/GetByUserId/{userId}")
+    fun getQuestionnaireByUserId(@Path("userId") userId: String): Call<Unit>
+
+    @POST("/api/v1/Questionnare/Create")
+    fun createQuestionnaire(@Body request: CreateQuestionnaireParam): Call<Unit>
+
+    @POST("/api/v1/Questionnare/PutAGrade")
+    fun putAQuestionnaireGrade(@Body request: PutAQuestionnaireGradeParam): Call<Unit>
+
+    @PATCH("/api/v1/Questionnare/Update")
+    fun updateQuestionnaire(@Body request: UpdateQuestionnaireParam): Call<Unit>
+
+    @PATCH("/api/v1/Questionnare/ResetStatistics")
+    fun resetQuestionnaireStatistics(): Call<Unit>
+
+    @PATCH("/api/v1/Questionnare/Publish")
+    fun publishQuestionnaire(): Call<Unit>
+
+    @PATCH("/api/v1/Questionnare/RemoveFromPublication")
+    fun removeQuestionnaireFromPublication(): Call<Unit>
 }
