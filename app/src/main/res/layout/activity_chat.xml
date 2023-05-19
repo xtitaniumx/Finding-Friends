@@ -6,128 +6,29 @@
     android:layout_height="match_parent"
     tools:context=".presentation.ChatActivity">
 
-    <LinearLayout
-        android:id="@+id/layoutChatTitle"
+    <io.getstream.chat.android.ui.message.list.header.MessageListHeaderView
+        android:id="@+id/messageListHeaderView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
-            android:id="@+id/buttonBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:background="@null"
-            android:contentDescription="@string/go_back"
-            android:padding="8dp"
-            app:srcCompat="@drawable/ic_back" />
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imageChatUser"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="16dp"
-            android:scaleType="fitXY"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/ImageView.Round"
-            app:srcCompat="@drawable/sample_card" />
-
-        <TextView
-            android:id="@+id/textChatUser"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="-2dp"
-            android:fontFamily="@font/manrope_bold"
-            android:textSize="18sp"
-            tools:text="Не Владимир" />
-
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listMessages"
+    <io.getstream.chat.android.ui.message.list.MessageListView
+        android:id="@+id/messageListView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/layoutSendMessage"
+        app:layout_constraintBottom_toTopOf="@+id/messageInputView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutChatTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/messageListHeaderView" />
 
-    <LinearLayout
-        android:id="@+id/layoutSendMessage"
+    <io.getstream.chat.android.ui.message.input.MessageInputView
+        android:id="@+id/messageInputView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="4dp"
-        android:orientation="horizontal"
-        android:paddingTop="6dp"
-        android:paddingBottom="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <ImageButton
-            android:id="@+id/buttonMeet"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="end"
-            android:background="@null"
-            android:contentDescription="@string/create_meet"
-            android:padding="8dp"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/ic_meet" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <EditText
-                android:id="@+id/editTextMessage"
-                style="@style/EditText.EnterMessage"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:drawablePadding="6dp"
-                android:ems="10"
-                android:hint="@string/message"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageButton
-                android:id="@+id/buttonClipToMessage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:contentDescription="@string/clip_to_message"
-                android:padding="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/editTextMessage"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_clip" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <ImageButton
-            android:id="@+id/buttonSendMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@null"
-            android:contentDescription="@string/send_message"
-            android:padding="8dp"
-            app:srcCompat="@drawable/ic_send" />
-
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

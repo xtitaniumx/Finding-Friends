@@ -4,7 +4,7 @@ import com.example.peoplefind.domain.model.request.ChangePasswordParam
 import com.example.peoplefind.domain.model.request.CreateQuestionnaireParam
 import com.example.peoplefind.domain.model.request.LoginAccountParam
 import com.example.peoplefind.domain.model.request.PutAQuestionnaireGradeParam
-import com.example.peoplefind.domain.model.request.RefreshTokenParam
+import com.example.peoplefind.domain.model.request.RefreshAccessTokenParam
 import com.example.peoplefind.domain.model.request.RegisterAccountParam
 import com.example.peoplefind.domain.model.request.UpdateAccountInfoParam
 import com.example.peoplefind.domain.model.request.UpdateQuestionnaireParam
@@ -25,12 +25,12 @@ interface ApiService {
     fun getUserById(@Path("userId") userId: String): Call<User>
 
     @POST("/api/v1/User/GetAccessToken")
-    fun refreshToken(@Body request: RefreshTokenParam): Call<AuthInfo>
+    fun refreshToken(@Body request: RefreshAccessTokenParam): Call<AuthInfo>
 
     @POST("/api/v1/User/Registration")
     fun registerUser(@Body request: RegisterAccountParam): Call<AuthInfo>
 
-    @POST("/api/v1/User/Authorization")
+    @POST("/api/v1/User/Login")
     fun loginUser(@Body request: LoginAccountParam): Call<AuthInfo>
 
     @POST("/api/v1/User/Logout")

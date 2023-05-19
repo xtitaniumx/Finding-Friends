@@ -4,17 +4,19 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.peoplefind.domain.model.request.SaveUserTokensParam
+import com.example.peoplefind.domain.model.request.SaveTokensParam
 import com.example.peoplefind.domain.usecase.DeleteUserTokensUseCase
-import com.example.peoplefind.domain.usecase.GetUserTokensUserCase
-import com.example.peoplefind.domain.usecase.SaveUserTokensUseCase
+import com.example.peoplefind.domain.usecase.GetTokenUseCase
+import com.example.peoplefind.domain.usecase.SaveTokensUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class TokenViewModel(
-    private val getUserTokensUseCase: GetUserTokensUserCase,
-    private val saveUserTokensUseCase: SaveUserTokensUseCase,
+    private val getAccessTokenUseCase: GetTokenUseCase.GetAccessToken,
+    private val getRefreshTokenUseCase: GetTokenUseCase.GetRefreshToken,
+    private val getStreamChatTokenUseCase: GetTokenUseCase.GetStreamChatToken,
+    private val saveUserTokensUseCase: SaveTokensUseCase,
     private val deleteUserTokensUseCase: DeleteUserTokensUseCase
 ) : ViewModel() {
     private val tokenMutable = MutableLiveData<String?>()
@@ -23,25 +25,32 @@ class TokenViewModel(
     private val refreshTokenMutable = MutableLiveData<String?>()
     val refreshToken: LiveData<String?> = refreshTokenMutable
 
+    private val streamChatTokenMutable = MutableLiveData<String?>()
+    val streamChatToken: LiveData<String?> = streamChatTokenMutable
+
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            val tokens = getUserTokensUseCase()
-            tokens.first.collect {
+            getAccessTokenUseCase.invoke().collect {
                 withContext(Dispatchers.Main) {
                     tokenMutable.value = it
                 }
             }
-            tokens.second.collect {
+            getRefreshTokenUseCase.invoke().collect {
                 withContext(Dispatchers.Main) {
                     refreshTokenMutable.value = it
+                }
+            }
+            getStreamChatTokenUseCase.invoke().collect {
+                withContext(Dispatchers.Main) {
+                    streamChatTokenMutable.value = it
                 }
             }
         }
     }
 
-    fun saveToken(token: String, refreshToken: String) {
+    fun saveToken(token: String, refreshToken: String, streamChatToken: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            saveUserTokensUseCase(SaveUserTokensParam(token, refreshToken))
+            saveUserTokensUseCase(SaveTokensParam(token, refreshToken, streamChatToken))
         }
     }
 

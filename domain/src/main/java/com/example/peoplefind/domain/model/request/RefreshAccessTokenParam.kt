@@ -1,5 +1,5 @@
 package com.example.peoplefind.domain.model.request
 
-data class RefreshTokenParam(
+data class RefreshAccessTokenParam(
     val refreshToken: String
 )

@@ -1,32 +1,47 @@
 package com.example.peoplefind.di
 
+import com.example.peoplefind.domain.usecase.GetTokenUseCase
 import com.example.peoplefind.presentation.vm.AuthViewModel
+import com.example.peoplefind.presentation.vm.MessengerViewModel
+import com.example.peoplefind.presentation.vm.ProfileViewModel
 import com.example.peoplefind.presentation.vm.TokenViewModel
-import com.example.peoplefind.presentation.vm.UserDataViewModel
+import com.example.peoplefind.presentation.vm.WelcomeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
     viewModel {
+        WelcomeViewModel(getUserLoginStateUseCase = get())
+    }
+
+    viewModel {
         AuthViewModel(
             registerAccountUseCase = get(),
-            loginAccountUseCase = get()
+            loginAccountUseCase = get(),
+            saveUserDataUseCase = get()
         )
     }
 
     viewModel {
         TokenViewModel(
-            getUserTokensUseCase = get(),
+            getAccessTokenUseCase = GetTokenUseCase.GetAccessToken(tokenRepository = get()),
+            getRefreshTokenUseCase = GetTokenUseCase.GetRefreshToken(tokenRepository = get()),
+            getStreamChatTokenUseCase = GetTokenUseCase.GetStreamChatToken(tokenRepository = get()),
             saveUserTokensUseCase = get(),
             deleteUserTokensUseCase = get()
         )
     }
 
     viewModel {
-        UserDataViewModel(
+        MessengerViewModel(
             getUserIdUseCase = get(),
-            getUserLoginStateUseCase = get(),
-            saveUserDataUseCase = get(),
+            getStreamChatTokenUseCase = get()
+        )
+    }
+
+    viewModel {
+        ProfileViewModel(
+            logoutAccountUseCase = get(),
             deleteUserDataUseCase = get()
         )
     }

@@ -1,6 +1,7 @@
 package com.example.peoplefind.data.api
 
-import com.example.peoplefind.domain.model.request.RefreshTokenParam
+import com.example.peoplefind.domain.model.request.RefreshAccessTokenParam
+import com.example.peoplefind.domain.model.request.SaveTokensParam
 import com.example.peoplefind.domain.model.response.AuthInfo
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -22,10 +23,11 @@ class AuthAuthenticator(private val tokenManager: TokenManager) : Authenticator 
                 tokenManager.deleteToken()
 
             newToken.body()?.let {
-                tokenManager.saveTokens(
-                    token = it.accessToken,
-                    refreshToken = it.refreshToken
-                )
+                tokenManager.saveTokens(SaveTokensParam(
+                    accessToken = it.accessToken,
+                    refreshToken = it.refreshToken,
+                    streamChatToken = it.streamChatToken
+                ))
                 response.request.newBuilder()
                     .header("Authorization", "Bearer ${it.accessToken}")
                     .build()
@@ -35,6 +37,6 @@ class AuthAuthenticator(private val tokenManager: TokenManager) : Authenticator 
 
     private fun getNewToken(refreshToken: String?): Call<AuthInfo> {
         val apiClient = ApiClient().getApiService(tokenManager)
-        return apiClient.refreshToken(request = RefreshTokenParam("Bearer $refreshToken"))
+        return apiClient.refreshToken(request = RefreshAccessTokenParam("Bearer $refreshToken"))
     }
 }

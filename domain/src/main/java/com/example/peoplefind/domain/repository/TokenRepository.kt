@@ -1,12 +1,16 @@
 package com.example.peoplefind.domain.repository
 
-import com.example.peoplefind.domain.model.request.SaveUserTokensParam
+import com.example.peoplefind.domain.model.request.SaveTokensParam
 import kotlinx.coroutines.flow.Flow
 
 interface TokenRepository {
-    fun getUserTokens(): Pair<Flow<String?>, Flow<String?>>
+    fun getAccessToken(): Flow<String?>
 
-    suspend fun saveUserTokens(param: SaveUserTokensParam)
+    fun getRefreshToken(): Flow<String?>
 
-    suspend fun deleteUserTokens()
+    fun getStreamChatToken(): Flow<String?>
+
+    suspend fun saveTokens(param: SaveTokensParam)
+
+    suspend fun deleteTokens()
 }

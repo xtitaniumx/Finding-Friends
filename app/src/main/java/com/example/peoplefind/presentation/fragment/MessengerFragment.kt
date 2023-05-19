@@ -1,28 +1,40 @@
 package com.example.peoplefind.presentation.fragment
 
-import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.peoplefind.R
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.example.peoplefind.databinding.FragmentMessengerBinding
-import com.example.peoplefind.domain.model.response.Chat
 import com.example.peoplefind.presentation.ChatActivity
-import com.example.peoplefind.presentation.adapter.ChatAdapter
+import com.example.peoplefind.presentation.vm.MessengerViewModel
+import io.getstream.chat.android.client.ChatClient
+import io.getstream.chat.android.client.models.Filters
+import io.getstream.chat.android.ui.channel.list.viewmodel.ChannelListViewModel
+import io.getstream.chat.android.ui.channel.list.viewmodel.bindView
+import io.getstream.chat.android.ui.channel.list.viewmodel.factory.ChannelListViewModelFactory
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MessengerFragment : Fragment(), ChatAdapter.OnClickListener {
+class MessengerFragment : Fragment() {
+    private val messengerViewModel by viewModel<MessengerViewModel>()
     private lateinit var binding: FragmentMessengerBinding
-    private val chatAdapter by lazy { ChatAdapter(this) }
 
     companion object {
         @JvmStatic
         fun newInstance() = MessengerFragment()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        messengerViewModel.getStreamChatUser()
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentMessengerBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -33,25 +45,34 @@ class MessengerFragment : Fragment(), ChatAdapter.OnClickListener {
     }
 
     private fun initView() = with(binding) {
-        listChats.apply {
-            layoutManager = LinearLayoutManager(requireActivity())
-            adapter = chatAdapter
-        }
+        // Step 3 - Authenticate and connect the user
+        messengerViewModel.streamChatUser.observe(viewLifecycleOwner) {
+            val client = ChatClient.instance()
+            val streamChatUser = it.first
 
-        chatAdapter.submitList(
-            listOf(
-                Chat("1", "Не Владимир", R.drawable.sample_card, "Привет!"),
-                Chat("2", "Совсем не Владимир", R.drawable.sample_card, "Как дела?"),
-                Chat("3", "Точно Не Владимир", R.drawable.sample_card, "Hi!")
+            client.connectUser(
+                user = streamChatUser,
+                token = it.second
+            ).enqueue()
+
+            // Step 4 - Set the channel list filter and order
+            // This can be read as requiring only channels whose "type" is "messaging" AND
+            // whose "members" include our "user.id"
+            val filter = Filters.and(
+                Filters.eq("type", "messaging"),
+                Filters.`in`("members", listOf(streamChatUser.id))
             )
-        )
-    }
+            val viewModelFactory =
+                ChannelListViewModelFactory(filter, ChannelListViewModel.DEFAULT_SORT)
+            val viewModel: ChannelListViewModel by viewModels { viewModelFactory }
 
-    override fun onChatClick(item: Chat) {
-        val intent = Intent(requireActivity(), ChatActivity::class.java).apply {
-            putExtra("ChatUser", item.userName)
-            putExtra("ChatUserImage", item.userImage)
+            // Step 5 - Connect the ChannelListViewModel to the ChannelListView, loose
+            //          coupling makes it easy to customize
+            viewModel.bindView(binding.channelListView, viewLifecycleOwner)
         }
-        startActivity(intent)
+
+        binding.channelListView.setChannelItemClickListener { channel ->
+            startActivity(ChatActivity.newIntent(requireActivity(), channel))
+        }
     }
 }

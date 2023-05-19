@@ -3,6 +3,7 @@ package com.example.peoplefind.data.repository
 import android.content.Context
 import com.example.peoplefind.data.api.ApiClient
 import com.example.peoplefind.data.api.UserDataManager
+import com.example.peoplefind.domain.model.ApiResult
 import com.example.peoplefind.domain.model.request.LoginAccountParam
 import com.example.peoplefind.domain.model.request.RegisterAccountParam
 import com.example.peoplefind.domain.model.request.SaveLoginDataParam
@@ -19,6 +20,10 @@ class UserRepositoryImpl(apiClient: ApiClient, context: Context) : UserRepositor
 
     override fun loginAccount(param: LoginAccountParam) = apiRequestFlow {
         apiService.loginUser(request = param)
+    }
+
+    override fun logoutAccount(): Flow<ApiResult<Unit>> = apiRequestFlow {
+        apiService.logoutUser()
     }
 
     override fun getUserId(): Flow<String?> {

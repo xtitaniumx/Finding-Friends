@@ -12,6 +12,8 @@ interface UserRepository {
 
     fun loginAccount(param: LoginAccountParam): Flow<ApiResult<AuthInfo>>
 
+    fun logoutAccount(): Flow<ApiResult<Unit>>
+
     fun getUserId(): Flow<String?>
 
     fun getUserLoginState(): Flow<Boolean?>

@@ -7,9 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.peoplefind.databinding.FragmentProfileBinding
+import com.example.peoplefind.domain.extension.onFailure
+import com.example.peoplefind.domain.extension.onLoading
+import com.example.peoplefind.domain.extension.onSuccess
 import com.example.peoplefind.presentation.ChangeQuestionnaireActivity
+import com.example.peoplefind.presentation.RegisterActivity
+import com.example.peoplefind.presentation.WelcomeActivity
+import com.example.peoplefind.presentation.util.clearStack
+import com.example.peoplefind.presentation.util.showErrorDialog
+import com.example.peoplefind.presentation.vm.ProfileViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileFragment : Fragment() {
+    private val profileViewModel by viewModel<ProfileViewModel>()
     private lateinit var binding: FragmentProfileBinding
 
     companion object {
@@ -31,6 +41,29 @@ class ProfileFragment : Fragment() {
         buttonChangeQuestionnaire.setOnClickListener {
             val intent = Intent(requireActivity(), ChangeQuestionnaireActivity::class.java)
             startActivity(intent)
+        }
+
+        buttonLogout.setOnClickListener {
+            profileViewModel.logoutAccount()
+        }
+
+        profileViewModel.logoutResult.observe(viewLifecycleOwner) { result ->
+            result.onLoading {
+                skeletonLogout.showSkeleton()
+            }.onSuccess {
+                profileViewModel.deleteUserData()
+                skeletonLogout.showOriginal()
+                val intent = Intent(requireActivity(), RegisterActivity::class.java)
+                    .apply { clearStack() }
+                startActivity(intent)
+            }.onFailure { message, error ->
+                skeletonLogout.showOriginal()
+               // showErrorDialog("Вы не авторизованы", "Вы будете перенаправлены на приветственный экран!")
+                profileViewModel.deleteUserData()
+                val intent = Intent(requireActivity(), RegisterActivity::class.java)
+                    .apply { clearStack() }
+                startActivity(intent)
+            }
         }
     }
 }

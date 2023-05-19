@@ -19,7 +19,7 @@ import java.io.IOException
 abstract class BaseRepository(private val context: Context) {
     val tokenManager = TokenManager(context)
 
-    fun <D> apiRequestFlow(call: suspend () -> Call<D>): Flow<ApiResult<D>> = flow {
+    fun <T> apiRequestFlow(call: suspend () -> Call<T>): Flow<ApiResult<T>> = flow {
         emit(ApiResult.Loading)
 
         withTimeoutOrNull(20000L) {
@@ -33,12 +33,12 @@ abstract class BaseRepository(private val context: Context) {
                 } else {
                     response.errorBody()?.let { error ->
                         error.close()
-                        val parsedError: ErrorResponse =
+                        val parsedError: ErrorResponse? =
                             Gson().fromJson(error.charStream(), ErrorResponse::class.java)
                         emit(
                             ApiResult.Failure(
                                 message = context.resources.getString(R.string.error),
-                                error = parsedError.failureMessage + ", HTTP 400"
+                                error = parsedError?.failureMessage + ", HTTP 400"
                             )
                         )
                     }

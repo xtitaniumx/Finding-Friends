@@ -8,6 +8,7 @@ import com.example.peoplefind.databinding.ActivityRegisterBinding
 import com.example.peoplefind.domain.extension.onFailure
 import com.example.peoplefind.domain.extension.onLoading
 import com.example.peoplefind.domain.extension.onSuccess
+import com.example.peoplefind.presentation.util.showErrorDialog
 import com.example.peoplefind.presentation.vm.AuthViewModel
 import com.example.peoplefind.presentation.vm.TokenViewModel
 import com.example.peoplefind.presentation.vm.UserDataViewModel
@@ -17,7 +18,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class RegisterActivity : AppCompatActivity() {
     private val authViewModel by viewModel<AuthViewModel>()
     private val tokenViewModel by viewModel<TokenViewModel>()
-    private val userDataViewModel by viewModel<UserDataViewModel>()
     private lateinit var binding: ActivityRegisterBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,19 +48,18 @@ class RegisterActivity : AppCompatActivity() {
             }.onSuccess {
                 skeletonRegister.showOriginal()
                 tokenViewModel.saveToken(
-                    token = it.accessToken, refreshToken = it.refreshToken
+                    token = it.accessToken,
+                    refreshToken = it.refreshToken,
+                    streamChatToken = it.streamChatToken
                 )
-                userDataViewModel.saveUserData(
-                    userId = it.userId, loginState = false
+                authViewModel.saveUserData(
+                    userId = it.userId, loginState = true
                 )
                 val intent = Intent(this@RegisterActivity, QuestionnaireActivity::class.java)
                 startActivity(intent)
-            }.onFailure { message, error ->
+            }.onFailure { message, _ ->
                 skeletonRegister.showOriginal()
-                MaterialAlertDialogBuilder(this@RegisterActivity)
-                    .setTitle(resources.getString(R.string.register_error))
-                    .setMessage(message)
-                    .show()
+                showErrorDialog(resources.getString(R.string.register_error), message)
             }
         }
     }

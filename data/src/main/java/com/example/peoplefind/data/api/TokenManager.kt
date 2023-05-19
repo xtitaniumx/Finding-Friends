@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.example.peoplefind.domain.model.request.SaveTokensParam
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -15,6 +16,7 @@ class TokenManager(private val context: Context) {
     companion object {
         private val TOKEN_KEY = stringPreferencesKey("jwt_token")
         private val REFRESH_TOKEN_KEY = stringPreferencesKey("jwt_refresh_token")
+        private val STREAM_CHAT_TOKEN_KEY = stringPreferencesKey("jwt_stream_chat_token")
     }
 
     fun getToken(): Flow<String?> {
@@ -29,10 +31,17 @@ class TokenManager(private val context: Context) {
         }
     }
 
-    suspend fun saveTokens(token: String, refreshToken: String) {
+    fun getStreamChatToken(): Flow<String?> {
+        return context.dataStore.data.map { preferences ->
+            preferences[STREAM_CHAT_TOKEN_KEY]
+        }
+    }
+
+    suspend fun saveTokens(saveTokensParam: SaveTokensParam) {
         context.dataStore.edit { preferences ->
-            preferences[TOKEN_KEY] = token
-            preferences[REFRESH_TOKEN_KEY] = refreshToken
+            preferences[TOKEN_KEY] = saveTokensParam.accessToken
+            preferences[REFRESH_TOKEN_KEY] = saveTokensParam.refreshToken
+            preferences[STREAM_CHAT_TOKEN_KEY] = saveTokensParam.streamChatToken
         }
     }
 
@@ -45,6 +54,12 @@ class TokenManager(private val context: Context) {
     suspend fun deleteRefreshToken() {
         context.dataStore.edit { preferences ->
             preferences.remove(REFRESH_TOKEN_KEY)
+        }
+    }
+
+    suspend fun deleteStreamChatToken() {
+        context.dataStore.edit { preferences ->
+            preferences.remove(STREAM_CHAT_TOKEN_KEY)
         }
     }
 }

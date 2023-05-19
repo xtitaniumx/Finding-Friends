@@ -61,20 +61,26 @@
 
     </LinearLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonLogOut"
+    <com.faltenreich.skeletonlayout.SkeletonLayout
+        android:id="@+id/skeletonLogout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/bg_button"
-        android:fontFamily="@font/manrope_medium"
-        android:text="@string/log_out_action"
-        android:textSize="16sp"
-        app:backgroundTint="?attr/colorSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_button"
+            android:fontFamily="@font/manrope_medium"
+            android:text="@string/log_out_action"
+            android:textSize="16sp"
+            app:backgroundTint="?attr/colorSecondary" />
+
+    </com.faltenreich.skeletonlayout.SkeletonLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
