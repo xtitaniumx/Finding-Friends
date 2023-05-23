@@ -2,10 +2,13 @@ package com.example.peoplefind.presentation.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.peoplefind.domain.model.ApiResult
 import com.example.peoplefind.domain.usecase.DeleteUserDataUseCase
 import com.example.peoplefind.domain.usecase.LogOutAccountUseCase
-import kotlinx.coroutines.runBlocking
+import io.getstream.chat.android.client.ChatClient
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ProfileViewModel(
     private val logoutAccountUseCase: LogOutAccountUseCase,
@@ -22,8 +25,9 @@ class ProfileViewModel(
     }
 
     fun deleteUserData() {
-        runBlocking {
+        viewModelScope.launch(Dispatchers.IO) {
             deleteUserDataUseCase()
+            ChatClient.instance().disconnect(flushPersistence = true).execute()
         }
     }
 }

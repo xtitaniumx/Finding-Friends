@@ -11,7 +11,7 @@ fun <T : Any> ApiResult<T>.onLoading(
 }
 
 fun <T : Any> ApiResult<T>.onSuccess(
-    executable: (T) -> Unit
+    executable: (T?) -> Unit
 ): ApiResult<T> = apply {
     if (this is ApiResult.Success<T>) {
         executable(data)

@@ -11,12 +11,12 @@ import com.example.peoplefind.domain.extension.onFailure
 import com.example.peoplefind.domain.extension.onLoading
 import com.example.peoplefind.domain.extension.onSuccess
 import com.example.peoplefind.presentation.ChangeQuestionnaireActivity
-import com.example.peoplefind.presentation.RegisterActivity
-import com.example.peoplefind.presentation.WelcomeActivity
+import com.example.peoplefind.presentation.LoginActivity
 import com.example.peoplefind.presentation.util.clearStack
 import com.example.peoplefind.presentation.util.showErrorDialog
 import com.example.peoplefind.presentation.vm.ProfileViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class ProfileFragment : Fragment() {
     private val profileViewModel by viewModel<ProfileViewModel>()
@@ -51,19 +51,27 @@ class ProfileFragment : Fragment() {
             result.onLoading {
                 skeletonLogout.showSkeleton()
             }.onSuccess {
-                profileViewModel.deleteUserData()
-                skeletonLogout.showOriginal()
-                val intent = Intent(requireActivity(), RegisterActivity::class.java)
-                    .apply { clearStack() }
-                startActivity(intent)
+                logout()
             }.onFailure { message, error ->
-                skeletonLogout.showOriginal()
-               // showErrorDialog("Вы не авторизованы", "Вы будете перенаправлены на приветственный экран!")
-                profileViewModel.deleteUserData()
-                val intent = Intent(requireActivity(), RegisterActivity::class.java)
-                    .apply { clearStack() }
-                startActivity(intent)
+                logout()
             }
+        }
+    }
+
+    private fun logout() {
+        profileViewModel.deleteUserData()
+        binding.skeletonLogout.showOriginal()
+        val intent = Intent(requireActivity(), LoginActivity::class.java)
+            .apply { clearStack() }
+        startActivity(intent)
+
+        showErrorDialog(
+            title = "Истекло время авторизации",
+            message = "Вы будете перенаправлены на страницу входа в аккаунт"
+        ) {
+            val intent1 = Intent(requireActivity(), LoginActivity::class.java)
+                .apply { clearStack() }
+            startActivity(intent1)
         }
     }
 }

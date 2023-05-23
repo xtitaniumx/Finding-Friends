@@ -1,7 +1,7 @@
 package com.example.peoplefind.data.api
 
 import com.example.peoplefind.domain.model.request.ChangePasswordParam
-import com.example.peoplefind.domain.model.request.CreateQuestionnaireParam
+import com.example.peoplefind.domain.model.request.FillQuestionnaireParam
 import com.example.peoplefind.domain.model.request.LoginAccountParam
 import com.example.peoplefind.domain.model.request.PutAQuestionnaireGradeParam
 import com.example.peoplefind.domain.model.request.RefreshAccessTokenParam
@@ -45,27 +45,27 @@ interface ApiService {
     /**
      * Questionnaire requests
      */
-    @GET("/api/v1/Questionnare/GetRecommendations")
+    @GET("/api/v1/Questionnaire/GetRecommendations")
     fun getRecommendations(): Call<Unit>
 
-    @GET("/api/v1/Questionnare/GetByUserId/{userId}")
+    @GET("/api/v1/Questionnaire/GetByUserId/{userId}")
     fun getQuestionnaireByUserId(@Path("userId") userId: String): Call<Unit>
 
-    @POST("/api/v1/Questionnare/Create")
-    fun createQuestionnaire(@Body request: CreateQuestionnaireParam): Call<Unit>
+    @PATCH("/api/v1/Questionnaire/FillOutAForm")
+    fun fillQuestionnaire(@Body request: FillQuestionnaireParam): Call<Unit>
 
-    @POST("/api/v1/Questionnare/PutAGrade")
+    @PATCH("/api/v1/Questionnaire/PutAGrade")
     fun putAQuestionnaireGrade(@Body request: PutAQuestionnaireGradeParam): Call<Unit>
 
-    @PATCH("/api/v1/Questionnare/Update")
+    @PATCH("/api/v1/Questionnaire/Update")
     fun updateQuestionnaire(@Body request: UpdateQuestionnaireParam): Call<Unit>
 
-    @PATCH("/api/v1/Questionnare/ResetStatistics")
+    @PATCH("/api/v1/Questionnaire/ResetStatistics")
     fun resetQuestionnaireStatistics(): Call<Unit>
 
-    @PATCH("/api/v1/Questionnare/Publish")
+    @PATCH("/api/v1/Questionnaire/Publish")
     fun publishQuestionnaire(): Call<Unit>
 
-    @PATCH("/api/v1/Questionnare/RemoveFromPublication")
+    @PATCH("/api/v1/Questionnaire/RemoveFromPublication")
     fun removeQuestionnaireFromPublication(): Call<Unit>
 }

@@ -11,8 +11,6 @@ import com.example.peoplefind.domain.extension.onSuccess
 import com.example.peoplefind.presentation.util.showErrorDialog
 import com.example.peoplefind.presentation.vm.AuthViewModel
 import com.example.peoplefind.presentation.vm.TokenViewModel
-import com.example.peoplefind.presentation.vm.UserDataViewModel
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity() {
@@ -44,7 +42,8 @@ class LoginActivity : AppCompatActivity() {
             result.onLoading {
                 skeletonLogin.showSkeleton()
             }.onSuccess {
-                skeletonLogin.showOriginal()
+                if (it == null) return@onSuccess
+
                 tokenViewModel.saveToken(
                     token = it.accessToken,
                     refreshToken = it.refreshToken,
@@ -53,6 +52,7 @@ class LoginActivity : AppCompatActivity() {
                 authViewModel.saveUserData(
                     userId = it.userId, loginState = true
                 )
+                skeletonLogin.showOriginal()
                 val intent = Intent(this@LoginActivity, QuestionnaireActivity::class.java)
                 startActivity(intent)
             }.onFailure { message, error ->

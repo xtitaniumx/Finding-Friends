@@ -17,7 +17,7 @@
         android:paddingTop="12dp"
         android:paddingEnd="16dp"
         android:paddingBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonNext"
+        app:layout_constraintBottom_toTopOf="@+id/skeletonNext"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -136,16 +136,21 @@
                         android:text="@string/interests_question"
                         android:textSize="16sp" />
 
-                    <EditText
-                        android:id="@+id/editTextInterests"
-                        style="@style/EditText.Themed"
+                    <HorizontalScrollView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:ems="10"
-                        android:hint="@string/enter_interests"
-                        android:importantForAutofill="no"
-                        android:inputType="text" />
+                        android:layout_marginTop="4dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textInterests">
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/chipGroupInterests"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:singleLine="true" />
+
+                    </HorizontalScrollView>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -209,20 +214,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/buttonNext"
-        style="@style/MaterialButton.Inverse"
+    <com.faltenreich.skeletonlayout.SkeletonLayout
+        android:id="@+id/skeletonNext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="4dp"
-        android:background="@drawable/bg_button"
-        android:fontFamily="@font/inter_medium"
-        android:text="@string/next_action"
-        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/textQuestionnaireNotice"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonNext"
+            style="@style/MaterialButton.Inverse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_button"
+            android:fontFamily="@font/inter_medium"
+            android:text="@string/next_action"
+            android:textSize="16sp" />
+
+    </com.faltenreich.skeletonlayout.SkeletonLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

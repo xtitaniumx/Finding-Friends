@@ -98,4 +98,6 @@
     <string name="age">Возраст</string>
     <string name="study">Сфера работы или учебы</string>
     <string name="city">Город проживания</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

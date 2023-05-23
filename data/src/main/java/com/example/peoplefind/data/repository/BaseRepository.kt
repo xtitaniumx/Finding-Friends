@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withTimeoutOrNull
+import okhttp3.ResponseBody
+import okhttp3.internal.EMPTY_RESPONSE
 import retrofit2.Call
 import retrofit2.HttpException
 import timber.log.Timber
@@ -25,11 +27,10 @@ abstract class BaseRepository(private val context: Context) {
         withTimeoutOrNull(20000L) {
             try {
                 val response = call().execute()
+                Timber.d("Response: $response")
 
                 if (response.isSuccessful) {
-                    response.body()?.let { data ->
-                        emit(ApiResult.Success(data))
-                    }
+                    emit(ApiResult.Success(response.body()))
                 } else {
                     response.errorBody()?.let { error ->
                         error.close()

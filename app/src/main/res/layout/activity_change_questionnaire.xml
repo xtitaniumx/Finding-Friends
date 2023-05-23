@@ -41,7 +41,7 @@
             android:paddingStart="16dp"
             android:paddingTop="12dp"
             android:paddingEnd="16dp"
-            android:paddingBottom="12dp">
+            android:paddingBottom="16dp">
 
             <TextView
                 android:layout_width="match_parent"
@@ -115,16 +115,21 @@
                 android:text="@string/interests"
                 android:textSize="16sp" />
 
-            <EditText
-                android:id="@+id/editTextInterests"
-                style="@style/EditText.Themed"
+            <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:ems="10"
-                android:hint="@string/enter_interests"
-                android:importantForAutofill="no"
-                android:inputType="text" />
+                android:layout_marginTop="4dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textInterests">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroupInterests"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:singleLine="true" />
+
+            </HorizontalScrollView>
 
             <TextView
                 android:layout_width="match_parent"
@@ -168,6 +173,22 @@
                 android:importantForAutofill="no"
                 android:inputType="text" />
 
+            <com.faltenreich.skeletonlayout.SkeletonLayout
+                android:id="@+id/skeletonConfirmChangeQuestionnaire"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/buttonConfirmChangeQuestionnaire"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_button"
+                    android:fontFamily="@font/inter_medium"
+                    android:text="@string/meet_confirm" />
+
+            </com.faltenreich.skeletonlayout.SkeletonLayout>
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

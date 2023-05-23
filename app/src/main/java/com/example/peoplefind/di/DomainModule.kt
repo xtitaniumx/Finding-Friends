@@ -2,6 +2,7 @@ package com.example.peoplefind.di
 
 import com.example.peoplefind.domain.usecase.DeleteUserDataUseCase
 import com.example.peoplefind.domain.usecase.DeleteUserTokensUseCase
+import com.example.peoplefind.domain.usecase.FillQuestionnaireUseCase
 import com.example.peoplefind.domain.usecase.GetTokenUseCase
 import com.example.peoplefind.domain.usecase.GetUserIdUseCase
 import com.example.peoplefind.domain.usecase.GetUserLoginStateUseCase
@@ -10,6 +11,7 @@ import com.example.peoplefind.domain.usecase.LogOutAccountUseCase
 import com.example.peoplefind.domain.usecase.RegisterAccountUseCase
 import com.example.peoplefind.domain.usecase.SaveTokensUseCase
 import com.example.peoplefind.domain.usecase.SaveUserDataUseCase
+import com.example.peoplefind.domain.usecase.UpdateQuestionnaireUseCase
 import org.koin.dsl.module
 
 val domainModule = module {
@@ -59,5 +61,13 @@ val domainModule = module {
 
     factory {
         DeleteUserDataUseCase(userRepository = get())
+    }
+
+    factory {
+        FillQuestionnaireUseCase(questionnaireRepository = get())
+    }
+
+    factory {
+        UpdateQuestionnaireUseCase(questionnaireRepository = get())
     }
 }

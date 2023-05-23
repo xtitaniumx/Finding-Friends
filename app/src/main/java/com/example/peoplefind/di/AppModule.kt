@@ -2,8 +2,10 @@ package com.example.peoplefind.di
 
 import com.example.peoplefind.domain.usecase.GetTokenUseCase
 import com.example.peoplefind.presentation.vm.AuthViewModel
+import com.example.peoplefind.presentation.vm.ChangeQuestionnaireViewModel
 import com.example.peoplefind.presentation.vm.MessengerViewModel
 import com.example.peoplefind.presentation.vm.ProfileViewModel
+import com.example.peoplefind.presentation.vm.QuestionnaireViewModel
 import com.example.peoplefind.presentation.vm.TokenViewModel
 import com.example.peoplefind.presentation.vm.WelcomeViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -33,6 +35,10 @@ val appModule = module {
     }
 
     viewModel {
+        QuestionnaireViewModel(fillQuestionnaireUseCase = get())
+    }
+
+    viewModel {
         MessengerViewModel(
             getUserIdUseCase = get(),
             getStreamChatTokenUseCase = get()
@@ -43,6 +49,12 @@ val appModule = module {
         ProfileViewModel(
             logoutAccountUseCase = get(),
             deleteUserDataUseCase = get()
+        )
+    }
+
+    viewModel {
+        ChangeQuestionnaireViewModel(
+            updateQuestionnaireUseCase = get()
         )
     }
 }

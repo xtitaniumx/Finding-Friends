@@ -20,7 +20,7 @@ open class BaseViewModel : ViewModel() {
                  errorLiveData.value = error.localizedMessage ?: "Error occurred! Please try again."
             }
         }) {
-            request().distinctUntilChanged().collect {
+            request().collect {
                 withContext(Dispatchers.Main) {
                     liveData.value = it
                 }

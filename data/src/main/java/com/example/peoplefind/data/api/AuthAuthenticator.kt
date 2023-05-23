@@ -19,8 +19,11 @@ class AuthAuthenticator(private val tokenManager: TokenManager) : Authenticator 
         return runBlocking {
             val newToken = getNewToken(token).execute()
 
-            if (!newToken.isSuccessful || newToken.body() == null)
+            if (!newToken.isSuccessful || newToken.body() == null) {
                 tokenManager.deleteToken()
+                tokenManager.deleteRefreshToken()
+                tokenManager.deleteStreamChatToken()
+            }
 
             newToken.body()?.let {
                 tokenManager.saveTokens(SaveTokensParam(
