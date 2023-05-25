@@ -8,19 +8,19 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.peoplefind.R
 import com.example.peoplefind.databinding.ItemCardUserBinding
-import com.example.peoplefind.domain.model.response.User
+import com.example.peoplefind.domain.model.response.Questionnaire
 
-class CardUserAdapter(
+class QuestionnaireAdapter(
     private val listener: OnClickListener
-) : ListAdapter<User, CardUserAdapter.Holder>(Comparator()) {
+) : ListAdapter<Questionnaire, QuestionnaireAdapter.Holder>(Comparator()) {
 
     interface OnClickListener {
-        fun onCardClick(item: User)
+        fun onCardClick(item: Questionnaire)
     }
 
     class Holder(itemView: View, listener: OnClickListener) : ViewHolder(itemView) {
         private val binding = ItemCardUserBinding.bind(itemView)
-        private lateinit var user: User
+        private lateinit var user: Questionnaire
 
         init {
             binding.imageProfileCard.setOnClickListener {
@@ -28,7 +28,7 @@ class CardUserAdapter(
             }
         }
 
-        fun bind(item: User) = with(binding) {
+        fun bind(item: Questionnaire) = with(binding) {
             user = item
 
             textProfileInfo.text = item.name
@@ -36,12 +36,12 @@ class CardUserAdapter(
         }
     }
 
-    class Comparator : DiffUtil.ItemCallback<User>() {
-        override fun areItemsTheSame(oldItem: User, newItem: User): Boolean {
-            return oldItem.id == newItem.id
+    class Comparator : DiffUtil.ItemCallback<Questionnaire>() {
+        override fun areItemsTheSame(oldItem: Questionnaire, newItem: Questionnaire): Boolean {
+            return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: User, newItem: User): Boolean {
+        override fun areContentsTheSame(oldItem: Questionnaire, newItem: Questionnaire): Boolean {
             return oldItem == newItem
         }
     }

@@ -11,7 +11,6 @@ class RegisterAccountUseCase(private val userRepository: UserRepository) {
     operator fun invoke(registerAccountParam: RegisterAccountParam): Flow<ApiResult<AuthInfo>> {
         when {
             registerAccountParam.email.isEmpty() ||
-                    registerAccountParam.birthDate.isEmpty() ||
                     registerAccountParam.password.isEmpty() ||
                     registerAccountParam.passwordConfirm.isEmpty() -> {
                 return flow {

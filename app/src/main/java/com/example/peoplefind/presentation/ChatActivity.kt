@@ -16,7 +16,6 @@ import com.getstream.sdk.chat.viewmodel.messages.MessageListViewModel
 import com.getstream.sdk.chat.viewmodel.messages.MessageListViewModel.Mode.Normal
 import com.getstream.sdk.chat.viewmodel.messages.MessageListViewModel.Mode.Thread
 import com.getstream.sdk.chat.viewmodel.messages.MessageListViewModel.State.NavigateUp
-import io.getstream.chat.android.client.models.Channel
 import io.getstream.chat.android.ui.message.input.viewmodel.bindView
 import io.getstream.chat.android.ui.message.list.header.viewmodel.MessageListHeaderViewModel
 import io.getstream.chat.android.ui.message.list.header.viewmodel.bindView
@@ -31,8 +30,8 @@ class ChatActivity : AppCompatActivity(), ChatMessageAdapter.OnMeetClickListener
     companion object {
         private const val CID_KEY = "cid_key"
 
-        fun newIntent(context: Context, channel: Channel): Intent =
-            Intent(context, ChatActivity::class.java).putExtra(CID_KEY, channel.cid)
+        fun newIntent(context: Context, channelId: String): Intent =
+            Intent(context, ChatActivity::class.java).putExtra(CID_KEY, channelId)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,5 +1,6 @@
 package com.example.peoplefind.presentation.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.peoplefind.databinding.FragmentMessengerBinding
 import com.example.peoplefind.presentation.ChatActivity
+import com.example.peoplefind.presentation.ChatSearchActivity
 import com.example.peoplefind.presentation.vm.MessengerViewModel
 import io.getstream.chat.android.client.ChatClient
 import io.getstream.chat.android.client.models.Filters
@@ -45,6 +47,11 @@ class MessengerFragment : Fragment() {
     }
 
     private fun initView() = with(binding) {
+        buttonSearch.setOnClickListener {
+            val intent = Intent(requireActivity(), ChatSearchActivity::class.java)
+            startActivity(intent)
+        }
+
         // Step 3 - Authenticate and connect the user
         messengerViewModel.streamChatUser.observe(viewLifecycleOwner) {
             val client = ChatClient.instance()
@@ -71,8 +78,8 @@ class MessengerFragment : Fragment() {
             viewModel.bindView(binding.channelListView, viewLifecycleOwner)
         }
 
-        binding.channelListView.setChannelItemClickListener { channel ->
-            startActivity(ChatActivity.newIntent(requireActivity(), channel))
+        channelListView.setChannelItemClickListener { channel ->
+            startActivity(ChatActivity.newIntent(requireActivity(), channel.cid))
         }
     }
 }

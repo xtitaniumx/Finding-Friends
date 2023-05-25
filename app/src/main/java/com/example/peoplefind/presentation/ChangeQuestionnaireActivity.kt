@@ -1,22 +1,23 @@
 package com.example.peoplefind.presentation
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.peoplefind.R
 import com.example.peoplefind.databinding.ActivityChangeQuestionnaireBinding
 import com.example.peoplefind.domain.extension.onFailure
 import com.example.peoplefind.domain.extension.onLoading
 import com.example.peoplefind.domain.extension.onSuccess
-import com.example.peoplefind.domain.model.Interest
 import com.example.peoplefind.domain.model.QuestionnaireAddress
-import com.example.peoplefind.presentation.util.createInterestDialog
-import com.example.peoplefind.presentation.vm.ChangeQuestionnaireViewModel
+import com.example.peoplefind.presentation.util.convertAgeToIsoDateTime
+import com.example.peoplefind.presentation.vm.InterestViewModel
+import com.example.peoplefind.presentation.vm.QuestionnaireViewModel
 import com.google.android.material.chip.Chip
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 class ChangeQuestionnaireActivity : AppCompatActivity() {
-    private val changeQuestionnaireViewModel by viewModel<ChangeQuestionnaireViewModel>()
+    private val questionnaireViewModel by viewModel<QuestionnaireViewModel>()
+    private val interestViewModel by viewModels<InterestViewModel>()
     private lateinit var binding: ActivityChangeQuestionnaireBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,38 +31,35 @@ class ChangeQuestionnaireActivity : AppCompatActivity() {
         val interests = resources.getStringArray(R.array.interests)
         interests.forEach {
             addChip(interests.indexOf(it), it)
-            changeQuestionnaireViewModel.addInterestDescription(interests.indexOf(it), "")
         }
 
-        val interestsDescription = changeQuestionnaireViewModel.interestsDescriptionList.value
+        interestViewModel.interest.observe(this@ChangeQuestionnaireActivity) {
+            questionnaireViewModel.addInterest(name = it.name, description = it.description)
+        }
 
         buttonConfirmChangeQuestionnaire.setOnClickListener {
-            changeQuestionnaireViewModel.updateQuestionnaire(
+            questionnaireViewModel.updateQuestionnaire(
                 name = editTextName.text.toString(),
                 surname = "",
-                birthDate = editTextAge.text.toString(),
+                birthDate = convertAgeToIsoDateTime(editTextAge.text.toString()),
                 address = QuestionnaireAddress(
                     region = "",
                     city = editTextCity.text.toString(),
                     street = "",
                     numberOfHome = ""
                 ),
-                interests = listOf(
-                    Interest(name = interests[0], description = interestsDescription?.get(0) ?: ""),
-                    Interest(name = interests[1], description = interestsDescription?.get(1) ?: ""),
-                    Interest(name = interests[2], description = interestsDescription?.get(2) ?: "")
-                )
+                interests = questionnaireViewModel.interests.value!!
             )
         }
 
-        changeQuestionnaireViewModel.updateQuestionnaireResult.observe(this@ChangeQuestionnaireActivity) { result ->
+        questionnaireViewModel.updateQuestionnaireResult.observe(this@ChangeQuestionnaireActivity) { result ->
             result.onLoading {
-                skeletonConfirmChangeQuestionnaire.showSkeleton()
+                veilChangeQuestionnaireConfirm.veil()
             }.onSuccess {
-                skeletonConfirmChangeQuestionnaire.showOriginal()
+                veilChangeQuestionnaireConfirm.unVeil()
                 finish()
-            }.onFailure { message, error ->
-                skeletonConfirmChangeQuestionnaire.showOriginal()
+            }.onFailure { _, _ ->
+                veilChangeQuestionnaireConfirm.unVeil()
             }
         }
     }
@@ -74,20 +72,12 @@ class ChangeQuestionnaireActivity : AppCompatActivity() {
             isCheckable = true
             setOnClickListener {
                 if (!this.isChecked) {
-                    changeQuestionnaireViewModel.removeInterestDescription(chipId)
+                    questionnaireViewModel.removeInterest(chipText)
                     return@setOnClickListener
                 }
 
-                val dialog = createInterestDialog(chipText)
-                val interestDialog = dialog.first.show()
-                val interestDialogBinding = dialog.second
-                interestDialogBinding.buttonConfirmDescription.setOnClickListener {
-                    changeQuestionnaireViewModel.addInterestDescription(
-                        chipId, interestDialogBinding.editTextInterestDescription.text.toString()
-                    )
-                    interestDialog.dismiss()
-                    Timber.d("Interest description: ${interestDialogBinding.editTextInterestDescription.text}")
-                }
+                InterestBottomSheet.newInstance(chipText)
+                    .show(supportFragmentManager, InterestBottomSheet.TAG)
             }
             binding.chipGroupInterests.addView(this)
         }

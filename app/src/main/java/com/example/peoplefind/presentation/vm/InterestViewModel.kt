@@ -3,12 +3,13 @@ package com.example.peoplefind.presentation.vm
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.peoplefind.domain.model.Interest
 
 class InterestViewModel : ViewModel() {
-    private val interestMutable = MutableLiveData<Pair<Int, String>>()
-    val interest: LiveData<Pair<Int, String>> = interestMutable
+    private val interestMutable = MutableLiveData<Interest>()
+    val interest: LiveData<Interest> = interestMutable
 
-    fun setInterest(id: Int, description: String) {
-        interestMutable.value = Pair(id, description)
+    fun setInterest(name: String, description: String) {
+        interestMutable.value = Interest(name, description)
     }
 }

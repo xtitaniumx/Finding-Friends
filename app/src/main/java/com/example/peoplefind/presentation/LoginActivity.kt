@@ -40,7 +40,7 @@ class LoginActivity : AppCompatActivity() {
 
         authViewModel.authInfo.observe(this@LoginActivity) { result ->
             result.onLoading {
-                skeletonLogin.showSkeleton()
+                veilLogin.veil()
             }.onSuccess {
                 if (it == null) return@onSuccess
 
@@ -52,11 +52,11 @@ class LoginActivity : AppCompatActivity() {
                 authViewModel.saveUserData(
                     userId = it.userId, loginState = true
                 )
-                skeletonLogin.showOriginal()
+                veilLogin.unVeil()
                 val intent = Intent(this@LoginActivity, QuestionnaireActivity::class.java)
                 startActivity(intent)
             }.onFailure { message, error ->
-                skeletonLogin.showOriginal()
+                veilLogin.unVeil()
                 showErrorDialog(resources.getString(R.string.login_error), message)
             }
         }

@@ -173,11 +173,21 @@
                 android:importantForAutofill="no"
                 android:inputType="text" />
 
-            <com.faltenreich.skeletonlayout.SkeletonLayout
-                android:id="@+id/skeletonConfirmChangeQuestionnaire"
+            <com.skydoves.androidveil.VeilLayout
+                android:id="@+id/veilChangeQuestionnaireConfirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp">
+                android:layout_marginTop="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:veilLayout_baseAlpha="0.6"
+                app:veilLayout_baseColor="@android:color/holo_green_dark"
+                app:veilLayout_dropOff="0.5"
+                app:veilLayout_highlightAlpha="1.0"
+                app:veilLayout_highlightColor="@android:color/holo_green_light"
+                app:veilLayout_radius="10dp"
+                app:veilLayout_shimmerEnable="true">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/buttonConfirmChangeQuestionnaire"
@@ -188,7 +198,7 @@
                     android:fontFamily="@font/inter_medium"
                     android:text="@string/meet_confirm" />
 
-            </com.faltenreich.skeletonlayout.SkeletonLayout>
+            </com.skydoves.androidveil.VeilLayout>
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

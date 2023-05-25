@@ -6,10 +6,13 @@ import com.example.peoplefind.domain.model.ApiResult
 import com.example.peoplefind.domain.model.Interest
 import com.example.peoplefind.domain.model.QuestionnaireAddress
 import com.example.peoplefind.domain.model.request.FillQuestionnaireParam
+import com.example.peoplefind.domain.model.request.UpdateQuestionnaireParam
 import com.example.peoplefind.domain.usecase.FillQuestionnaireUseCase
+import com.example.peoplefind.domain.usecase.UpdateQuestionnaireUseCase
 
 class QuestionnaireViewModel(
-    private val fillQuestionnaireUseCase: FillQuestionnaireUseCase
+    private val fillQuestionnaireUseCase: FillQuestionnaireUseCase,
+    private val updateQuestionnaireUseCase: UpdateQuestionnaireUseCase
 ) : BaseViewModel() {
     private val fillQuestionnaireResultFlowMutable = MutableLiveData<String>()
     val fillQuestionnaireResultFlow: LiveData<String> = fillQuestionnaireResultFlowMutable
@@ -17,8 +20,14 @@ class QuestionnaireViewModel(
     private val fillQuestionnaireResultMutable = MutableLiveData<ApiResult<Unit>>()
     val fillQuestionnaireResult: LiveData<ApiResult<Unit>> = fillQuestionnaireResultMutable
 
-    private val interestsDescriptionListMutable = MutableLiveData<List<String>>()
-    val interestsDescriptionList: LiveData<List<String>> = interestsDescriptionListMutable
+    private val updateQuestionnaireResultFlowMutable = MutableLiveData<String>()
+    val updateQuestionnaireResultFlow: LiveData<String> = updateQuestionnaireResultFlowMutable
+
+    private val updateQuestionnaireResultMutable = MutableLiveData<ApiResult<Unit>>()
+    val updateQuestionnaireResult: LiveData<ApiResult<Unit>> = updateQuestionnaireResultMutable
+
+    private val interestsMutable = MutableLiveData<List<Interest>>()
+    val interests: LiveData<List<Interest>> = interestsMutable
 
     fun fillQuestionnaire(
         name: String,
@@ -32,17 +41,29 @@ class QuestionnaireViewModel(
         )
     }
 
-    fun addInterestDescription(number: Int, description: String) {
-        val list = ArrayList<String>()
-        interestsDescriptionListMutable.value?.let { list.addAll(it) }
-        list.add(number, description)
-        interestsDescriptionListMutable.value = list
+    fun updateQuestionnaire(
+        name: String,
+        surname: String,
+        birthDate: String,
+        address: QuestionnaireAddress,
+        interests: List<Interest>
+    ) = baseRequest(updateQuestionnaireResultMutable, updateQuestionnaireResultFlowMutable) {
+        updateQuestionnaireUseCase(
+            UpdateQuestionnaireParam(name, surname, birthDate, address, interests)
+        )
     }
 
-    fun removeInterestDescription(number: Int) {
-        val list = ArrayList<String>()
-        interestsDescriptionListMutable.value?.let { list.addAll(it) }
-        list[number] = ""
-        interestsDescriptionListMutable.value = list
+    fun addInterest(name: String, description: String) {
+        val list = ArrayList<Interest>()
+        interestsMutable.value?.let { list.addAll(it) }
+        list.add(Interest(name, description))
+        interestsMutable.value = list
+    }
+
+    fun removeInterest(name: String) {
+        val list = ArrayList<Interest>()
+        interestsMutable.value?.let { list.addAll(it) }
+        list.removeAll { it.name == name }
+        interestsMutable.value = list
     }
 }

@@ -9,21 +9,18 @@ import com.example.peoplefind.databinding.BottomSheetInterestBinding
 import com.example.peoplefind.presentation.vm.InterestViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-private const val ARG_INTEREST_ID = "interest_id"
 private const val ARG_INTEREST = "interest_name"
 
 class InterestBottomSheet : BottomSheetDialogFragment() {
     private val interestViewModel by activityViewModels<InterestViewModel>()
     private lateinit var binding: BottomSheetInterestBinding
-    private var interestId: Int? = null
     private var interestName: String? = null
 
     companion object {
         const val TAG = "interest_bottom_sheet"
 
-        fun newInstance(interestId: Int, interestName: String) = InterestBottomSheet().apply {
+        fun newInstance(interestName: String) = InterestBottomSheet().apply {
             arguments = Bundle().apply {
-                putInt(ARG_INTEREST_ID, interestId)
                 putString(ARG_INTEREST, interestName)
             }
         }
@@ -32,7 +29,6 @@ class InterestBottomSheet : BottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            interestId = it.getInt(ARG_INTEREST_ID)
             interestName = it.getString(ARG_INTEREST)
         }
     }
@@ -51,8 +47,8 @@ class InterestBottomSheet : BottomSheetDialogFragment() {
         textInterestName.text = interestName
 
         buttonConfirmDescription.setOnClickListener {
-            interestId?.let { id ->
-                interestViewModel.setInterest(id, editTextInterestDescription.text.toString())
+            interestName?.let { name ->
+                interestViewModel.setInterest(name, editTextInterestDescription.text.toString())
             }
             dismiss()
         }

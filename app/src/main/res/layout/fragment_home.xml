@@ -7,24 +7,30 @@
     android:orientation="vertical"
     tools:context=".presentation.fragment.HomeFragment">
 
-    <com.faltenreich.skeletonlayout.SkeletonLayout
-        android:id="@+id/skeletonCardUsers"
+    <com.skydoves.androidveil.VeilLayout
+        android:id="@+id/veilQuestionnaire"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/layoutCardActions"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:shimmerColor="@color/black">
+        app:veilLayout_baseAlpha="0.6"
+        app:veilLayout_baseColor="@android:color/holo_green_dark"
+        app:veilLayout_dropOff="0.5"
+        app:veilLayout_highlightAlpha="1.0"
+        app:veilLayout_highlightColor="@android:color/holo_green_light"
+        app:veilLayout_radius="12dp"
+        app:veilLayout_shimmerEnable="true"
+        app:veilLayout_veiled="true">
 
         <com.yuyakaido.android.cardstackview.CardStackView
-            android:id="@+id/cardUsers"
+            android:id="@+id/cardQuestionnaires"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="16dp"
             android:contentDescription="@string/list_questionnaire" />
 
-    </com.faltenreich.skeletonlayout.SkeletonLayout>
+    </com.skydoves.androidveil.VeilLayout>
 
     <LinearLayout
         android:id="@+id/layoutCardActions"
@@ -44,8 +50,9 @@
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="24dp"
             android:background="@drawable/bg_skip"
+            android:contentDescription="@string/dislike_questionnaire"
             android:src="@drawable/ic_skip"
-            android:contentDescription="@string/dislike_questionnaire" />
+            app:tint="@color/white" />
 
         <ImageButton
             android:id="@+id/buttonLike"
@@ -53,8 +60,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:background="@drawable/bg_like"
-            android:src="@drawable/ic_heart"
-            android:contentDescription="@string/like_questionnaire" />
+            android:contentDescription="@string/like_questionnaire"
+            android:src="@drawable/ic_like"
+            app:tint="@color/white" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

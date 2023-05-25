@@ -16,7 +16,6 @@ import com.example.peoplefind.presentation.util.clearStack
 import com.example.peoplefind.presentation.util.showErrorDialog
 import com.example.peoplefind.presentation.vm.ProfileViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 class ProfileFragment : Fragment() {
     private val profileViewModel by viewModel<ProfileViewModel>()
@@ -49,7 +48,7 @@ class ProfileFragment : Fragment() {
 
         profileViewModel.logoutResult.observe(viewLifecycleOwner) { result ->
             result.onLoading {
-                skeletonLogout.showSkeleton()
+                veilLogout.veil()
             }.onSuccess {
                 logout()
             }.onFailure { message, error ->
@@ -60,7 +59,7 @@ class ProfileFragment : Fragment() {
 
     private fun logout() {
         profileViewModel.deleteUserData()
-        binding.skeletonLogout.showOriginal()
+        binding.veilLogout.unVeil()
         val intent = Intent(requireActivity(), LoginActivity::class.java)
             .apply { clearStack() }
         startActivity(intent)

@@ -10,10 +10,10 @@ import android.view.animation.LinearInterpolator
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import com.example.peoplefind.databinding.FragmentHomeBinding
-import com.example.peoplefind.domain.model.Address
-import com.example.peoplefind.domain.model.response.User
+import com.example.peoplefind.domain.model.QuestionnaireAddress
+import com.example.peoplefind.domain.model.response.Questionnaire
 import com.example.peoplefind.presentation.AboutUserCardActivity
-import com.example.peoplefind.presentation.adapter.CardUserAdapter
+import com.example.peoplefind.presentation.adapter.QuestionnaireAdapter
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager
 import com.yuyakaido.android.cardstackview.CardStackListener
 import com.yuyakaido.android.cardstackview.Direction
@@ -22,8 +22,8 @@ import com.yuyakaido.android.cardstackview.StackFrom
 import com.yuyakaido.android.cardstackview.SwipeAnimationSetting
 import com.yuyakaido.android.cardstackview.SwipeableMethod
 
-class HomeFragment : Fragment(), CardStackListener, CardUserAdapter.OnClickListener {
-    private val adapter by lazy { CardUserAdapter(this) }
+class HomeFragment : Fragment(), CardStackListener, QuestionnaireAdapter.OnClickListener {
+    private val adapter by lazy { QuestionnaireAdapter(this) }
     private lateinit var binding: FragmentHomeBinding
 
     companion object {
@@ -58,10 +58,10 @@ class HomeFragment : Fragment(), CardStackListener, CardUserAdapter.OnClickListe
             setOverlayInterpolator(LinearInterpolator())
         }
 
-        if (cardUsers.layoutManager == null) {
-            cardUsers.layoutManager = manager
-            cardUsers.adapter = adapter
-            cardUsers.itemAnimator.apply {
+        if (cardQuestionnaires.layoutManager == null) {
+            cardQuestionnaires.layoutManager = manager
+            cardQuestionnaires.adapter = adapter
+            cardQuestionnaires.itemAnimator.apply {
                 if (this is DefaultItemAnimator) {
                     supportsChangeAnimations = false
                 }
@@ -75,7 +75,7 @@ class HomeFragment : Fragment(), CardStackListener, CardUserAdapter.OnClickListe
                 .setInterpolator(AccelerateInterpolator())
                 .build()
             manager.setSwipeAnimationSetting(setting)
-            cardUsers.swipe()
+            cardQuestionnaires.swipe()
         }
 
         buttonLike.setOnClickListener {
@@ -85,34 +85,35 @@ class HomeFragment : Fragment(), CardStackListener, CardUserAdapter.OnClickListe
                 .setInterpolator(AccelerateInterpolator())
                 .build()
             manager.setSwipeAnimationSetting(setting)
-            cardUsers.swipe()
+            cardQuestionnaires.swipe()
         }
 
         if (adapter.currentList.size == 0) {
             adapter.submitList(listOf(
-                User("1", "", "", "Владимир", "", "", Address("Владимировосток", "", "", "", "")),
-                User("2", "", "", "Не Владимир", "", "", Address("Владимировосток", "", "", "", "")),
-                User("3", "", "", "Точно не Владимир", "", "", Address("Владимировосток", "", "", "", "")),
-                User("4", "", "", "Совсем не Владимир", "", "", Address("Владимировосток", "", "", "", ""))
+                Questionnaire("Владимир", "", "01-01-04", QuestionnaireAddress("Россия", "Владимировосток", "", ""), emptyList()),
+                Questionnaire("Не Владимир", "", "01-01-04", QuestionnaireAddress("Россия", "Владимировосток", "", ""), emptyList()),
+                Questionnaire("Точно не Владимир", "", "01-01-04", QuestionnaireAddress("Россия", "Владимировосток", "", ""), emptyList()),
+                Questionnaire("Совсем не Владимир", "", "01-01-04", QuestionnaireAddress("Россия", "Владимировосток", "", ""), emptyList())
             ))
+            veilQuestionnaire.unVeil()
         }
     }
 
     override fun onCardSwiped(direction: Direction?) {
-        if ((binding.cardUsers.layoutManager as CardStackLayoutManager).topPosition == adapter.itemCount - 2) {
-            //binding.skeletonCardUsers.showSkeleton()
+        if ((binding.cardQuestionnaires.layoutManager as CardStackLayoutManager).topPosition == adapter.itemCount - 1) {
+            binding.veilQuestionnaire.veil()
             val oldList = adapter.currentList
             adapter.submitList(oldList.plus(listOf(
-                User("5", "", "", "Владимир", "", "", Address("Владимировосток", "", "", "", "")),
-                User("6", "", "", "Не Владимир", "", "", Address("Владимировосток", "", "", "", "")),
-                User("7", "", "", "Точно не Владимир", "", "", Address("Владимировосток", "", "", "", "")),
-                User("8", "", "", "Совсем не Владимир", "", "", Address("Владимировосток", "", "", "", ""))
+                Questionnaire("Владимир", "", "01-01-04", QuestionnaireAddress("Россия", "Владимировосток", "", ""), emptyList()),
+                Questionnaire("Не Владимир", "", "01-01-04", QuestionnaireAddress("Россия", "Владимировосток", "", ""), emptyList()),
+                Questionnaire("Точно не Владимир", "", "01-01-04", QuestionnaireAddress("Россия", "Владимировосток", "", ""), emptyList()),
+                Questionnaire("Совсем не Владимир", "", "01-01-04", QuestionnaireAddress("Россия", "Владимировосток", "", ""), emptyList())
             )))
-            //binding.skeletonCardUsers.showOriginal()
+            binding.veilQuestionnaire.unVeil()
         }
     }
 
-    override fun onCardClick(item: User) {
+    override fun onCardClick(item: Questionnaire) {
         val intent = Intent(requireActivity(), AboutUserCardActivity::class.java).apply {
             putExtra("UserName", item.name)
             putExtra("UserCity", item.address.city)

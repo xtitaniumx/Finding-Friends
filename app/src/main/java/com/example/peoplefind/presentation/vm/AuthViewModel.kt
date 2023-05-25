@@ -27,34 +27,22 @@ class AuthViewModel(
 
     fun registerAccount(
         email: String,
-        birthdate: String,
         password: String,
         passwordConfirm: String
     ) = baseRequest(authInfoMutable, authInfoFlowErrorMutable) {
         registerAccountUseCase(
-            RegisterAccountParam(
-                email, convertDateToServerFormat(birthdate), password, passwordConfirm
-            )
+            RegisterAccountParam(email, password, passwordConfirm)
         )
     }
 
     fun loginAccount(email: String, password: String) =
         baseRequest(authInfoMutable, authInfoFlowErrorMutable) {
-            loginAccountUseCase(
-                LoginAccountParam(
-                    email, password
-                )
-            )
+            loginAccountUseCase(LoginAccountParam(email, password))
         }
 
     fun saveUserData(userId: String, loginState: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             saveUserDataUseCase(SaveLoginDataParam(userId, loginState))
         }
-    }
-
-    private fun convertDateToServerFormat(date: String): String {
-        val newDate = date.replace('/', '-')
-        return "${newDate}T00:00:00.000Z"
     }
 }

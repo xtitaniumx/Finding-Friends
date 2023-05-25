@@ -2,7 +2,6 @@ package com.example.peoplefind.di
 
 import com.example.peoplefind.domain.usecase.GetTokenUseCase
 import com.example.peoplefind.presentation.vm.AuthViewModel
-import com.example.peoplefind.presentation.vm.ChangeQuestionnaireViewModel
 import com.example.peoplefind.presentation.vm.MessengerViewModel
 import com.example.peoplefind.presentation.vm.ProfileViewModel
 import com.example.peoplefind.presentation.vm.QuestionnaireViewModel
@@ -35,7 +34,10 @@ val appModule = module {
     }
 
     viewModel {
-        QuestionnaireViewModel(fillQuestionnaireUseCase = get())
+        QuestionnaireViewModel(
+            fillQuestionnaireUseCase = get(),
+            updateQuestionnaireUseCase = get()
+        )
     }
 
     viewModel {
@@ -49,12 +51,6 @@ val appModule = module {
         ProfileViewModel(
             logoutAccountUseCase = get(),
             deleteUserDataUseCase = get()
-        )
-    }
-
-    viewModel {
-        ChangeQuestionnaireViewModel(
-            updateQuestionnaireUseCase = get()
         )
     }
 }

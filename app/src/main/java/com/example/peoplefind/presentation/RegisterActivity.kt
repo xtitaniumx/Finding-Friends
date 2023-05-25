@@ -29,7 +29,6 @@ class RegisterActivity : AppCompatActivity() {
         buttonRegister.setOnClickListener {
             authViewModel.registerAccount(
                 email = editTextEmail.text.toString(),
-                birthdate = editTextBirthdate.text.toString(),
                 password = editTextPassword.text.toString(),
                 passwordConfirm = editTextPasswordConfirm.text.toString()
             )
@@ -42,7 +41,7 @@ class RegisterActivity : AppCompatActivity() {
 
         authViewModel.authInfo.observe(this@RegisterActivity) { result ->
             result.onLoading {
-                skeletonRegister.showSkeleton()
+                veilRegister.veil()
             }.onSuccess {
                 if (it == null) return@onSuccess
 
@@ -54,11 +53,11 @@ class RegisterActivity : AppCompatActivity() {
                 authViewModel.saveUserData(
                     userId = it.userId, loginState = true
                 )
-                skeletonRegister.showOriginal()
+                veilRegister.unVeil()
                 val intent = Intent(this@RegisterActivity, QuestionnaireActivity::class.java)
                 startActivity(intent)
             }.onFailure { message, _ ->
-                skeletonRegister.showOriginal()
+                veilRegister.unVeil()
                 showErrorDialog(resources.getString(R.string.register_error), message)
             }
         }

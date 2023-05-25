@@ -7,12 +7,14 @@
     tools:context=".presentation.MainActivity">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        style="@style/BottomNavigationView.Inverse"
         android:id="@+id/navMain"
+        style="@style/Widget.MaterialComponents.BottomNavigationView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:itemIconSize="28dp"
-        app:labelVisibilityMode="unlabeled"
+        app:itemIconSize="26dp"
+        app:itemTextAppearanceActive="@style/BottomNavigationView.Text"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView.Text"
+        app:labelVisibilityMode="selected"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
