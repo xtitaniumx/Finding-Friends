@@ -48,7 +48,7 @@ class ProfileFragment : Fragment() {
 
         profileViewModel.logoutResult.observe(viewLifecycleOwner) { result ->
             result.onLoading {
-                veilLogout.veil()
+                skeletonLogout.showSkeleton()
             }.onSuccess {
                 logout()
             }.onFailure { message, error ->
@@ -59,12 +59,12 @@ class ProfileFragment : Fragment() {
 
     private fun logout() {
         profileViewModel.deleteUserData()
-        binding.veilLogout.unVeil()
+        binding.skeletonLogout.showOriginal()
         val intent = Intent(requireActivity(), LoginActivity::class.java)
             .apply { clearStack() }
         startActivity(intent)
 
-        showErrorDialog(
+        requireActivity().showErrorDialog(
             title = "Истекло время авторизации",
             message = "Вы будете перенаправлены на страницу входа в аккаунт"
         ) {

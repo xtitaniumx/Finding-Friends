@@ -7,30 +7,25 @@
     android:orientation="vertical"
     tools:context=".presentation.fragment.HomeFragment">
 
-    <com.skydoves.androidveil.VeilLayout
-        android:id="@+id/veilQuestionnaire"
+    <com.faltenreich.skeletonlayout.SkeletonLayout
+        android:id="@+id/skeletonQuestionnaires"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/layoutCardActions"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:veilLayout_baseAlpha="0.6"
-        app:veilLayout_baseColor="@android:color/holo_green_dark"
-        app:veilLayout_dropOff="0.5"
-        app:veilLayout_highlightAlpha="1.0"
-        app:veilLayout_highlightColor="@android:color/holo_green_light"
-        app:veilLayout_radius="12dp"
-        app:veilLayout_shimmerEnable="true"
-        app:veilLayout_veiled="true">
+        app:maskColor="?attr/colorOnPrimary"
+        app:maskCornerRadius="12dp"
+        app:shimmerColor="?attr/colorPrimary">
 
         <com.yuyakaido.android.cardstackview.CardStackView
             android:id="@+id/cardQuestionnaires"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:contentDescription="@string/list_questionnaire" />
 
-    </com.skydoves.androidveil.VeilLayout>
+    </com.faltenreich.skeletonlayout.SkeletonLayout>
 
     <LinearLayout
         android:id="@+id/layoutCardActions"

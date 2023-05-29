@@ -12,5 +12,20 @@ fun Activity.showErrorDialog(title: String, message: String) {
     MaterialAlertDialogBuilder(this)
         .setTitle(title)
         .setMessage(message)
+        .setNegativeButton("ОК") { dialog, _ ->
+            dialog.dismiss()
+        }
+        .show()
+}
+
+fun Activity.showErrorDialog(title: String, message: String, onClick: () -> Unit) {
+    MaterialAlertDialogBuilder(this)
+        .setTitle(title)
+        .setMessage(message)
+        .setCancelable(false)
+        .setNegativeButton("ОК") { dialog, _ ->
+            onClick()
+            dialog.dismiss()
+        }
         .show()
 }

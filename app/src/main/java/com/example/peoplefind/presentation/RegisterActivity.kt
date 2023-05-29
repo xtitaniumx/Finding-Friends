@@ -41,7 +41,7 @@ class RegisterActivity : AppCompatActivity() {
 
         authViewModel.authInfo.observe(this@RegisterActivity) { result ->
             result.onLoading {
-                veilRegister.veil()
+                skeletonRegister.showSkeleton()
             }.onSuccess {
                 if (it == null) return@onSuccess
 
@@ -53,11 +53,11 @@ class RegisterActivity : AppCompatActivity() {
                 authViewModel.saveUserData(
                     userId = it.userId, loginState = true
                 )
-                veilRegister.unVeil()
+                skeletonRegister.showOriginal()
                 val intent = Intent(this@RegisterActivity, QuestionnaireActivity::class.java)
                 startActivity(intent)
             }.onFailure { message, _ ->
-                veilRegister.unVeil()
+                skeletonRegister.showOriginal()
                 showErrorDialog(resources.getString(R.string.register_error), message)
             }
         }

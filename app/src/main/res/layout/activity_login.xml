@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_dark"
+    android:background="@drawable/bg_grey"
     tools:context=".presentation.LoginActivity">
 
     <androidx.cardview.widget.CardView
@@ -61,33 +61,26 @@
                 android:hint="@string/enter_password"
                 android:inputType="text|textPassword" />
 
-            <com.skydoves.androidveil.VeilLayout
-                android:id="@+id/veilLogin"
+            <com.faltenreich.skeletonlayout.SkeletonLayout
+                android:id="@+id/skeletonLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:veilLayout_baseAlpha="0.6"
-                app:veilLayout_baseColor="@android:color/holo_green_dark"
-                app:veilLayout_dropOff="0.5"
-                app:veilLayout_highlightAlpha="1.0"
-                app:veilLayout_highlightColor="@android:color/holo_green_light"
-                app:veilLayout_radius="10dp"
-                app:veilLayout_shimmerEnable="true">
+                android:layout_marginTop="10dp"
+                app:maskColor="?attr/colorOnPrimary"
+                app:maskCornerRadius="10dp"
+                app:shimmerColor="?attr/colorPrimary">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/buttonLogin"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="@drawable/bg_button"
                     android:fontFamily="@font/manrope_bold"
                     android:text="@string/login_action"
                     android:textSize="14sp" />
 
-            </com.skydoves.androidveil.VeilLayout>
+            </com.faltenreich.skeletonlayout.SkeletonLayout>
 
             <TextView
                 android:id="@+id/textRestorePassword"

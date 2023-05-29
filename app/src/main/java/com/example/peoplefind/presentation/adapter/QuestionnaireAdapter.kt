@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.peoplefind.R
-import com.example.peoplefind.databinding.ItemCardUserBinding
+import com.example.peoplefind.databinding.ItemQuestionnaireBinding
 import com.example.peoplefind.domain.model.response.Questionnaire
 
 class QuestionnaireAdapter(
@@ -19,7 +19,7 @@ class QuestionnaireAdapter(
     }
 
     class Holder(itemView: View, listener: OnClickListener) : ViewHolder(itemView) {
-        private val binding = ItemCardUserBinding.bind(itemView)
+        private val binding = ItemQuestionnaireBinding.bind(itemView)
         private lateinit var user: Questionnaire
 
         init {
@@ -47,7 +47,7 @@ class QuestionnaireAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_card_user, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_questionnaire, parent, false)
         return Holder(view, listener)
     }
 

@@ -40,9 +40,9 @@
     <!-- Questionnaire Activity -->
     <string name="welcome">Добро пожаловать!</string>
     <string name="fill_questionnaire">Пожалуйста, заполните анкету</string>
-    <string name="name_question">Как Вас зовут?</string>
+    <string name="name_question">Как Вас зовут? <font color='red'>  ⃰</font></string>
     <string name="gender_question">Какого Вы пола?</string>
-    <string name="age_question">Сколько Вам лет?</string>
+    <string name="age_question">Сколько Вам лет? <font color='red'>  ⃰</font></string>
     <string name="interests_question">Какие у Вас интересы?</string>
     <string name="study_question">В какой сфере Вы работаете или учитесь?</string>
     <string name="city_question">В каком городе Вы живете?</string>
@@ -98,6 +98,4 @@
     <string name="age">Возраст</string>
     <string name="study">Сфера работы или учебы</string>
     <string name="city">Город проживания</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

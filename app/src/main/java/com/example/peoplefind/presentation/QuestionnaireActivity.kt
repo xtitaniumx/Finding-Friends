@@ -56,13 +56,13 @@ class QuestionnaireActivity : AppCompatActivity() {
 
         questionnaireViewModel.fillQuestionnaireResult.observe(this@QuestionnaireActivity) { result ->
             result.onLoading {
-                veilNext.veil()
+                skeletonNext.showSkeleton()
             }.onSuccess {
-                veilNext.unVeil()
+                skeletonNext.showOriginal()
                 val intent = Intent(this@QuestionnaireActivity, MainActivity::class.java)
                 startActivity(intent)
             }.onFailure { _, _ ->
-                veilNext.unVeil()
+                skeletonNext.showOriginal()
             }
         }
     }

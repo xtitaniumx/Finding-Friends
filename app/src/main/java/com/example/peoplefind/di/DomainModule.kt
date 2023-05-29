@@ -3,6 +3,7 @@ package com.example.peoplefind.di
 import com.example.peoplefind.domain.usecase.DeleteUserDataUseCase
 import com.example.peoplefind.domain.usecase.DeleteUserTokensUseCase
 import com.example.peoplefind.domain.usecase.FillQuestionnaireUseCase
+import com.example.peoplefind.domain.usecase.GetRecommendationsUseCase
 import com.example.peoplefind.domain.usecase.GetTokenUseCase
 import com.example.peoplefind.domain.usecase.GetUserIdUseCase
 import com.example.peoplefind.domain.usecase.GetUserLoginStateUseCase
@@ -61,6 +62,10 @@ val domainModule = module {
 
     factory {
         DeleteUserDataUseCase(userRepository = get())
+    }
+
+    factory {
+        GetRecommendationsUseCase(questionnaireRepository = get())
     }
 
     factory {

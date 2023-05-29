@@ -54,12 +54,12 @@ class ChangeQuestionnaireActivity : AppCompatActivity() {
 
         questionnaireViewModel.updateQuestionnaireResult.observe(this@ChangeQuestionnaireActivity) { result ->
             result.onLoading {
-                veilChangeQuestionnaireConfirm.veil()
+                skeletonConfirmChangeQuestionnaire.showSkeleton()
             }.onSuccess {
-                veilChangeQuestionnaireConfirm.unVeil()
+                skeletonConfirmChangeQuestionnaire.showOriginal()
                 finish()
             }.onFailure { _, _ ->
-                veilChangeQuestionnaireConfirm.unVeil()
+                skeletonConfirmChangeQuestionnaire.showOriginal()
             }
         }
     }
