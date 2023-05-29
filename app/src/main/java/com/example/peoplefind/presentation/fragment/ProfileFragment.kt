@@ -13,17 +13,24 @@ import com.example.peoplefind.domain.extension.onSuccess
 import com.example.peoplefind.presentation.ChangeQuestionnaireActivity
 import com.example.peoplefind.presentation.LoginActivity
 import com.example.peoplefind.presentation.util.clearStack
-import com.example.peoplefind.presentation.util.showErrorDialog
 import com.example.peoplefind.presentation.vm.ProfileViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class ProfileFragment : Fragment() {
     private val profileViewModel by viewModel<ProfileViewModel>()
     private lateinit var binding: FragmentProfileBinding
 
     companion object {
+        private var instance: ProfileFragment? = null
+
         @JvmStatic
-        fun newInstance() = ProfileFragment()
+        fun getInstance(): ProfileFragment {
+            if (instance == null) {
+                instance = ProfileFragment()
+            }
+            return instance as ProfileFragment
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -43,6 +50,7 @@ class ProfileFragment : Fragment() {
         }
 
         buttonLogout.setOnClickListener {
+            Timber.d("Logout button click")
             profileViewModel.logoutAccount()
         }
 
@@ -55,6 +63,10 @@ class ProfileFragment : Fragment() {
                 logout()
             }
         }
+
+        profileViewModel.logoutResultFlowError.observe(viewLifecycleOwner) { error ->
+            Timber.d("Logout error: $error")
+        }
     }
 
     private fun logout() {
@@ -64,13 +76,13 @@ class ProfileFragment : Fragment() {
             .apply { clearStack() }
         startActivity(intent)
 
-        requireActivity().showErrorDialog(
+        /*requireActivity().showErrorDialog(
             title = "Истекло время авторизации",
             message = "Вы будете перенаправлены на страницу входа в аккаунт"
         ) {
             val intent1 = Intent(requireActivity(), LoginActivity::class.java)
                 .apply { clearStack() }
             startActivity(intent1)
-        }
+        }*/
     }
 }

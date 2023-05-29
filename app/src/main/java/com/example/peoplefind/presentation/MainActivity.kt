@@ -11,9 +11,6 @@ import com.example.peoplefind.presentation.fragment.ProfileFragment
 
 class MainActivity : AppCompatActivity() {
     private val fragmentManager by lazy { supportFragmentManager }
-    private val homeFragment by lazy { HomeFragment.newInstance() }
-    private val messengerFragment by lazy { MessengerFragment.newInstance() }
-    private val profileFragment by lazy { ProfileFragment.newInstance() }
     private lateinit var activeFragment: Fragment
     private lateinit var binding: ActivityMainBinding
 
@@ -25,20 +22,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initFragments() = with(binding) {
-        activeFragment = homeFragment
+        activeFragment = HomeFragment.newInstance()
 
         navMain.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.menuHome -> {
-                    openFragment(homeFragment)
+                    openFragment(HomeFragment.newInstance())
                     return@setOnItemSelectedListener true
                 }
                 R.id.menuChat -> {
-                    openFragment(messengerFragment)
+                    openFragment(MessengerFragment.newInstance())
                     return@setOnItemSelectedListener true
                 }
                 R.id.menuProfile -> {
-                    openFragment(profileFragment)
+                    openFragment(ProfileFragment.getInstance())
                     return@setOnItemSelectedListener true
                 }
                 else -> return@setOnItemSelectedListener false
