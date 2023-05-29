@@ -65,7 +65,7 @@
                 android:id="@+id/skeletonLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="12dp"
                 app:maskColor="?attr/colorOnPrimary"
                 app:maskCornerRadius="10dp"
                 app:shimmerColor="?attr/colorPrimary">
