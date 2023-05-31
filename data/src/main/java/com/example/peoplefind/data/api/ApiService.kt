@@ -10,6 +10,7 @@ import com.example.peoplefind.domain.model.request.UpdateAccountInfoParam
 import com.example.peoplefind.domain.model.request.UpdateQuestionnaireParam
 import com.example.peoplefind.domain.model.response.AuthInfo
 import com.example.peoplefind.domain.model.response.Questionnaire
+import com.example.peoplefind.domain.model.response.QuestionnaireList
 import com.example.peoplefind.domain.model.response.User
 import retrofit2.Call
 import retrofit2.http.Body
@@ -47,7 +48,7 @@ interface ApiService {
      * Questionnaire requests
      */
     @GET("/api/v1/Questionnaire/GetRecommendations")
-    fun getRecommendations(): Call<List<Questionnaire>>
+    fun getRecommendations(): Call<List<QuestionnaireList>>
 
     @GET("/api/v1/Questionnaire/GetByUserId/{userId}")
     fun getQuestionnaireByUserId(@Path("userId") userId: String): Call<Questionnaire>

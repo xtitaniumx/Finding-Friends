@@ -42,7 +42,10 @@ val appModule = module {
     }
 
     viewModel {
-        HomeViewModel(getRecommendationsUseCase = get())
+        HomeViewModel(
+            getRecommendationsUseCase = get(),
+            putAQuestionnaireGradeUseCase = get()
+        )
     }
 
     viewModel {

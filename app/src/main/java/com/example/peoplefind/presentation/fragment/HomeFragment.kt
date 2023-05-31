@@ -13,8 +13,7 @@ import com.example.peoplefind.databinding.FragmentHomeBinding
 import com.example.peoplefind.domain.extension.onFailure
 import com.example.peoplefind.domain.extension.onLoading
 import com.example.peoplefind.domain.extension.onSuccess
-import com.example.peoplefind.domain.model.QuestionnaireAddress
-import com.example.peoplefind.domain.model.response.Questionnaire
+import com.example.peoplefind.domain.model.response.QuestionnaireList
 import com.example.peoplefind.presentation.AboutUserCardActivity
 import com.example.peoplefind.presentation.adapter.QuestionnaireAdapter
 import com.example.peoplefind.presentation.util.showErrorDialog
@@ -84,12 +83,18 @@ class HomeFragment : Fragment(), CardStackListener, QuestionnaireAdapter.OnClick
         homeViewModel.recommendations.observe(viewLifecycleOwner) { result ->
             result.onLoading {
                 Timber.d("Loading Recommendations...")
+                buttonLike.isEnabled = false
+                buttonSkip.isEnabled = false
                 skeletonQuestionnaires.showSkeleton()
             }.onSuccess {
                 adapter.submitList(it)
                 skeletonQuestionnaires.showOriginal()
+                buttonLike.isEnabled = true
+                buttonSkip.isEnabled = true
                 Timber.d("Recommendations loaded")
             }.onFailure { message, error ->
+                buttonLike.isEnabled = false
+                buttonSkip.isEnabled = false
                 skeletonQuestionnaires.showOriginal()
                 requireActivity().showErrorDialog(
                     title = "Не удалось получить список анкет",
@@ -98,52 +103,62 @@ class HomeFragment : Fragment(), CardStackListener, QuestionnaireAdapter.OnClick
             }
         }
 
-        /*if (adapter.currentList.size == 0) {
-            adapter.submitList(listOf(
-                Questionnaire("Владимир", "", "01-01-04", QuestionnaireAddress("Россия", "Владимировосток", "", ""), emptyList()),
-                Questionnaire("Не Владимир", "", "01-01-04", QuestionnaireAddress("Россия", "Владимировосток", "", ""), emptyList()),
-                Questionnaire("Точно не Владимир", "", "01-01-04", QuestionnaireAddress("Россия", "Владимировосток", "", ""), emptyList()),
-                Questionnaire("Совсем не Владимир", "", "01-01-04", QuestionnaireAddress("Россия", "Владимировосток", "", ""), emptyList())
-            ))
-            veilQuestionnaire.unVeil()
-        }*/
-
         buttonSkip.setOnClickListener {
-            val setting = SwipeAnimationSetting.Builder()
-                .setDirection(Direction.Top)
-                .setDuration(Duration.Normal.duration)
-                .setInterpolator(AccelerateInterpolator())
-                .build()
-            manager.setSwipeAnimationSetting(setting)
-            cardQuestionnaires.swipe()
+            if (adapter.currentList.isEmpty()) return@setOnClickListener
+            homeViewModel.dislikeQuestionnaire(adapter.currentList[manager.topPosition].id)
         }
 
         buttonLike.setOnClickListener {
-            val setting = SwipeAnimationSetting.Builder()
-                .setDirection(Direction.Right)
-                .setDuration(Duration.Normal.duration)
-                .setInterpolator(AccelerateInterpolator())
-                .build()
-            manager.setSwipeAnimationSetting(setting)
-            cardQuestionnaires.swipe()
+            if (adapter.currentList.isEmpty()) return@setOnClickListener
+            homeViewModel.likeQuestionnaire(adapter.currentList[manager.topPosition].id)
         }
+
+        homeViewModel.questionnaireRateDislikeResult.observe(viewLifecycleOwner) { result ->
+            result.onSuccess {
+                val setting = SwipeAnimationSetting.Builder()
+                    .setDirection(Direction.Top)
+                    .setDuration(Duration.Normal.duration)
+                    .setInterpolator(AccelerateInterpolator())
+                    .build()
+                manager.setSwipeAnimationSetting(setting)
+                cardQuestionnaires.swipe()
+                adapter.currentList.toMutableList()
+            }.onFailure { message, error ->
+
+            }
+        }
+
+        homeViewModel.questionnaireRateLikeResult.observe(viewLifecycleOwner) { result ->
+            result.onSuccess {
+                val setting = SwipeAnimationSetting.Builder()
+                    .setDirection(Direction.Right)
+                    .setDuration(Duration.Normal.duration)
+                    .setInterpolator(AccelerateInterpolator())
+                    .build()
+                manager.setSwipeAnimationSetting(setting)
+                cardQuestionnaires.swipe()
+            }.onFailure { message, error ->
+
+            }
+        }
+    }
+
+    private fun removeRatedCardFromList(currentList: List<QuestionnaireList>) {
+        val list = ArrayList<QuestionnaireList>().apply {
+            addAll(currentList)
+            removeLast()
+        }
+        adapter.submitList(list)
     }
 
     override fun onCardSwiped(direction: Direction?) {
+        removeRatedCardFromList(adapter.currentList)
         if ((binding.cardQuestionnaires.layoutManager as CardStackLayoutManager).topPosition == adapter.itemCount - 1) {
-            binding.skeletonQuestionnaires.showSkeleton()
-            val oldList = adapter.currentList
-            adapter.submitList(oldList.plus(listOf(
-                Questionnaire("Владимир", "", "01-01-04", QuestionnaireAddress("Россия", "Владимировосток", "", ""), emptyList()),
-                Questionnaire("Не Владимир", "", "01-01-04", QuestionnaireAddress("Россия", "Владимировосток", "", ""), emptyList()),
-                Questionnaire("Точно не Владимир", "", "01-01-04", QuestionnaireAddress("Россия", "Владимировосток", "", ""), emptyList()),
-                Questionnaire("Совсем не Владимир", "", "01-01-04", QuestionnaireAddress("Россия", "Владимировосток", "", ""), emptyList())
-            )))
-            binding.skeletonQuestionnaires.showOriginal()
+            // Data pagination
         }
     }
 
-    override fun onCardClick(item: Questionnaire) {
+    override fun onCardClick(item: QuestionnaireList) {
         val intent = Intent(requireActivity(), AboutUserCardActivity::class.java).apply {
             putExtra("UserName", item.name)
             putExtra("UserCity", item.address.city)

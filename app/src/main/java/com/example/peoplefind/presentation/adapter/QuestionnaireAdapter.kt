@@ -8,19 +8,19 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.peoplefind.R
 import com.example.peoplefind.databinding.ItemQuestionnaireBinding
-import com.example.peoplefind.domain.model.response.Questionnaire
+import com.example.peoplefind.domain.model.response.QuestionnaireList
 
 class QuestionnaireAdapter(
     private val listener: OnClickListener
-) : ListAdapter<Questionnaire, QuestionnaireAdapter.Holder>(Comparator()) {
+) : ListAdapter<QuestionnaireList, QuestionnaireAdapter.Holder>(Comparator()) {
 
     interface OnClickListener {
-        fun onCardClick(item: Questionnaire)
+        fun onCardClick(item: QuestionnaireList)
     }
 
     class Holder(itemView: View, listener: OnClickListener) : ViewHolder(itemView) {
         private val binding = ItemQuestionnaireBinding.bind(itemView)
-        private lateinit var user: Questionnaire
+        private lateinit var user: QuestionnaireList
 
         init {
             binding.imageProfileCard.setOnClickListener {
@@ -28,20 +28,19 @@ class QuestionnaireAdapter(
             }
         }
 
-        fun bind(item: Questionnaire) = with(binding) {
+        fun bind(item: QuestionnaireList) = with(binding) {
             user = item
-
             textProfileInfo.text = item.name
             textLocation.text = item.address.city
         }
     }
 
-    class Comparator : DiffUtil.ItemCallback<Questionnaire>() {
-        override fun areItemsTheSame(oldItem: Questionnaire, newItem: Questionnaire): Boolean {
-            return oldItem == newItem
+    class Comparator : DiffUtil.ItemCallback<QuestionnaireList>() {
+        override fun areItemsTheSame(oldItem: QuestionnaireList, newItem: QuestionnaireList): Boolean {
+            return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: Questionnaire, newItem: Questionnaire): Boolean {
+        override fun areContentsTheSame(oldItem: QuestionnaireList, newItem: QuestionnaireList): Boolean {
             return oldItem == newItem
         }
     }

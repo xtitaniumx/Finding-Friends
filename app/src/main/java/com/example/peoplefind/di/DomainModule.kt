@@ -9,6 +9,7 @@ import com.example.peoplefind.domain.usecase.GetUserIdUseCase
 import com.example.peoplefind.domain.usecase.GetUserLoginStateUseCase
 import com.example.peoplefind.domain.usecase.LoginAccountUseCase
 import com.example.peoplefind.domain.usecase.LogOutAccountUseCase
+import com.example.peoplefind.domain.usecase.PutAQuestionnaireGradeUseCase
 import com.example.peoplefind.domain.usecase.RegisterAccountUseCase
 import com.example.peoplefind.domain.usecase.SaveTokensUseCase
 import com.example.peoplefind.domain.usecase.SaveUserDataUseCase
@@ -70,6 +71,10 @@ val domainModule = module {
 
     factory {
         FillQuestionnaireUseCase(questionnaireRepository = get())
+    }
+
+    factory {
+        PutAQuestionnaireGradeUseCase(questionnaireRepository = get())
     }
 
     factory {
