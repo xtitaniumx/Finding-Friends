@@ -4,8 +4,10 @@ import android.content.Context
 import com.example.peoplefind.data.api.ApiClient
 import com.example.peoplefind.domain.model.ApiResult
 import com.example.peoplefind.domain.model.request.FillQuestionnaireParam
+import com.example.peoplefind.domain.model.request.GetQuestionnaireParam
 import com.example.peoplefind.domain.model.request.PutAQuestionnaireGradeParam
 import com.example.peoplefind.domain.model.request.UpdateQuestionnaireParam
+import com.example.peoplefind.domain.model.response.Questionnaire
 import com.example.peoplefind.domain.model.response.QuestionnaireList
 import com.example.peoplefind.domain.repository.QuestionnaireRepository
 import kotlinx.coroutines.flow.Flow
@@ -15,6 +17,10 @@ class QuestionnaireRepositoryImpl(apiClient: ApiClient, context: Context) : Ques
 
     override fun getRecommendations(): Flow<ApiResult<List<QuestionnaireList>>> = apiRequestFlow {
         apiService.getRecommendations()
+    }
+
+    override fun getQuestionnaire(param: GetQuestionnaireParam): Flow<ApiResult<Questionnaire>> = apiRequestFlow {
+        apiService.getQuestionnaireByUserId(userId = param.userId)
     }
 
     override fun fillQuestionnaire(param: FillQuestionnaireParam): Flow<ApiResult<Unit>> = apiRequestFlow {

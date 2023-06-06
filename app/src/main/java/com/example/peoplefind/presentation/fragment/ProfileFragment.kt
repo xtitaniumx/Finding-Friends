@@ -11,7 +11,7 @@ import com.example.peoplefind.domain.extension.onFailure
 import com.example.peoplefind.domain.extension.onLoading
 import com.example.peoplefind.domain.extension.onSuccess
 import com.example.peoplefind.presentation.ChangeQuestionnaireActivity
-import com.example.peoplefind.presentation.LoginActivity
+import com.example.peoplefind.presentation.RegisterActivity
 import com.example.peoplefind.presentation.util.clearStack
 import com.example.peoplefind.presentation.vm.ProfileViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -22,15 +22,8 @@ class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
 
     companion object {
-        private var instance: ProfileFragment? = null
-
         @JvmStatic
-        fun getInstance(): ProfileFragment {
-            if (instance == null) {
-                instance = ProfileFragment()
-            }
-            return instance as ProfileFragment
-        }
+        fun getInstance() = ProfileFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -72,7 +65,7 @@ class ProfileFragment : Fragment() {
     private fun logout() {
         profileViewModel.deleteUserData()
         binding.skeletonLogout.showOriginal()
-        val intent = Intent(requireActivity(), LoginActivity::class.java)
+        val intent = Intent(requireActivity(), RegisterActivity::class.java)
             .apply { clearStack() }
         startActivity(intent)
 

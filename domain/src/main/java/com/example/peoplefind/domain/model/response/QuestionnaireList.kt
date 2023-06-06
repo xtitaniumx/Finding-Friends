@@ -4,6 +4,7 @@ import com.example.peoplefind.domain.model.QuestionnaireAddress
 
 data class QuestionnaireList(
     val id: String,
+    val userId: String,
     val name: String,
     val surname: String,
     val birthDate: String,

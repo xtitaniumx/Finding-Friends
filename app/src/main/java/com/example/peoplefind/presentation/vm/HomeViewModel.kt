@@ -13,6 +13,7 @@ class HomeViewModel(
     private val getRecommendationsUseCase: GetRecommendationsUseCase,
     private val putAQuestionnaireGradeUseCase: PutAQuestionnaireGradeUseCase
 ) : BaseViewModel() {
+
     private val recommendationsMutable = MutableLiveData<ApiResult<List<QuestionnaireList>>>()
     val recommendations: LiveData<ApiResult<List<QuestionnaireList>>> = recommendationsMutable
 

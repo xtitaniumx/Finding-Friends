@@ -18,6 +18,7 @@ import com.example.peoplefind.presentation.AboutUserCardActivity
 import com.example.peoplefind.presentation.adapter.QuestionnaireAdapter
 import com.example.peoplefind.presentation.util.showErrorDialog
 import com.example.peoplefind.presentation.vm.HomeViewModel
+import com.example.peoplefind.presentation.vm.MessengerViewModel
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager
 import com.yuyakaido.android.cardstackview.CardStackListener
 import com.yuyakaido.android.cardstackview.Direction
@@ -25,11 +26,13 @@ import com.yuyakaido.android.cardstackview.Duration
 import com.yuyakaido.android.cardstackview.StackFrom
 import com.yuyakaido.android.cardstackview.SwipeAnimationSetting
 import com.yuyakaido.android.cardstackview.SwipeableMethod
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 class HomeFragment : Fragment(), CardStackListener, QuestionnaireAdapter.OnClickListener {
     private val homeViewModel by viewModel<HomeViewModel>()
+    private val messengerViewModel by activityViewModel<MessengerViewModel>()
     private val adapter by lazy { QuestionnaireAdapter(this) }
     private lateinit var binding: FragmentHomeBinding
 
@@ -83,19 +86,16 @@ class HomeFragment : Fragment(), CardStackListener, QuestionnaireAdapter.OnClick
         homeViewModel.recommendations.observe(viewLifecycleOwner) { result ->
             result.onLoading {
                 Timber.d("Loading Recommendations...")
-                buttonLike.isEnabled = false
-                buttonSkip.isEnabled = false
+                lockActionPanel()
                 skeletonQuestionnaires.showSkeleton()
             }.onSuccess {
                 adapter.submitList(it)
                 skeletonQuestionnaires.showOriginal()
-                buttonLike.isEnabled = true
-                buttonSkip.isEnabled = true
+                unlockActionPanel()
                 Timber.d("Recommendations loaded")
             }.onFailure { message, error ->
-                buttonLike.isEnabled = false
-                buttonSkip.isEnabled = false
                 skeletonQuestionnaires.showOriginal()
+                unlockActionPanel()
                 requireActivity().showErrorDialog(
                     title = "Не удалось получить список анкет",
                     message = message
@@ -114,7 +114,9 @@ class HomeFragment : Fragment(), CardStackListener, QuestionnaireAdapter.OnClick
         }
 
         homeViewModel.questionnaireRateDislikeResult.observe(viewLifecycleOwner) { result ->
-            result.onSuccess {
+            result.onLoading {
+                skeletonSkip.showSkeleton()
+            }.onSuccess {
                 val setting = SwipeAnimationSetting.Builder()
                     .setDirection(Direction.Top)
                     .setDuration(Duration.Normal.duration)
@@ -122,14 +124,17 @@ class HomeFragment : Fragment(), CardStackListener, QuestionnaireAdapter.OnClick
                     .build()
                 manager.setSwipeAnimationSetting(setting)
                 cardQuestionnaires.swipe()
-                adapter.currentList.toMutableList()
+                skeletonSkip.showOriginal()
             }.onFailure { message, error ->
-
+                skeletonSkip.showOriginal()
             }
         }
 
         homeViewModel.questionnaireRateLikeResult.observe(viewLifecycleOwner) { result ->
-            result.onSuccess {
+            result.onLoading {
+                skeletonLike.showSkeleton()
+            }.onSuccess {
+                messengerViewModel.beginChat(adapter.currentList[manager.topPosition].id)
                 val setting = SwipeAnimationSetting.Builder()
                     .setDirection(Direction.Right)
                     .setDuration(Duration.Normal.duration)
@@ -137,10 +142,21 @@ class HomeFragment : Fragment(), CardStackListener, QuestionnaireAdapter.OnClick
                     .build()
                 manager.setSwipeAnimationSetting(setting)
                 cardQuestionnaires.swipe()
+                skeletonLike.showOriginal()
             }.onFailure { message, error ->
-
+                skeletonLike.showOriginal()
             }
         }
+    }
+
+    private fun lockActionPanel() = with(binding) {
+        skeletonLike.showSkeleton()
+        skeletonSkip.showSkeleton()
+    }
+
+    private fun unlockActionPanel() = with(binding) {
+        skeletonLike.showOriginal()
+        skeletonSkip.showOriginal()
     }
 
     private fun removeRatedCardFromList(currentList: List<QuestionnaireList>) {
@@ -148,14 +164,12 @@ class HomeFragment : Fragment(), CardStackListener, QuestionnaireAdapter.OnClick
             addAll(currentList)
             removeLast()
         }
-        adapter.submitList(list)
+        if (list.isEmpty()) homeViewModel.getRecommendations()
+        else adapter.submitList(list)
     }
 
     override fun onCardSwiped(direction: Direction?) {
         removeRatedCardFromList(adapter.currentList)
-        if ((binding.cardQuestionnaires.layoutManager as CardStackLayoutManager).topPosition == adapter.itemCount - 1) {
-            // Data pagination
-        }
     }
 
     override fun onCardClick(item: QuestionnaireList) {

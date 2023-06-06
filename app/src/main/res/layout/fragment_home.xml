@@ -38,26 +38,46 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <ImageButton
-            android:id="@+id/buttonSkip"
+        <com.faltenreich.skeletonlayout.SkeletonLayout
+            android:id="@+id/skeletonSkip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="24dp"
-            android:background="@drawable/bg_skip"
-            android:contentDescription="@string/dislike_questionnaire"
-            android:src="@drawable/ic_skip"
-            app:tint="@color/white" />
+            app:maskColor="?attr/colorOnPrimary"
+            app:maskCornerRadius="12dp"
+            app:shimmerColor="?attr/colorPrimary">
 
-        <ImageButton
-            android:id="@+id/buttonLike"
+            <ImageButton
+                android:id="@+id/buttonSkip"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_skip"
+                android:contentDescription="@string/dislike_questionnaire"
+                android:src="@drawable/ic_skip"
+                app:tint="@color/white" />
+
+        </com.faltenreich.skeletonlayout.SkeletonLayout>
+
+        <com.faltenreich.skeletonlayout.SkeletonLayout
+            android:id="@+id/skeletonLike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginStart="24dp"
-            android:background="@drawable/bg_like"
-            android:contentDescription="@string/like_questionnaire"
-            android:src="@drawable/ic_like"
-            app:tint="@color/white" />
+            app:maskColor="?attr/colorOnPrimary"
+            app:maskCornerRadius="12dp"
+            app:shimmerColor="?attr/colorPrimary">
 
+            <ImageButton
+                android:id="@+id/buttonLike"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_like"
+                android:contentDescription="@string/like_questionnaire"
+                android:src="@drawable/ic_like"
+                app:tint="@color/white" />
+
+        </com.faltenreich.skeletonlayout.SkeletonLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

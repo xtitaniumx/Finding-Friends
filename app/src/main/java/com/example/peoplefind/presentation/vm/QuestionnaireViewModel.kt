@@ -6,14 +6,24 @@ import com.example.peoplefind.domain.model.ApiResult
 import com.example.peoplefind.domain.model.Interest
 import com.example.peoplefind.domain.model.QuestionnaireAddress
 import com.example.peoplefind.domain.model.request.FillQuestionnaireParam
+import com.example.peoplefind.domain.model.request.GetQuestionnaireParam
 import com.example.peoplefind.domain.model.request.UpdateQuestionnaireParam
+import com.example.peoplefind.domain.model.response.Questionnaire
 import com.example.peoplefind.domain.usecase.FillQuestionnaireUseCase
+import com.example.peoplefind.domain.usecase.GetQuestionnaireUseCase
 import com.example.peoplefind.domain.usecase.UpdateQuestionnaireUseCase
 
 class QuestionnaireViewModel(
+    private val getQuestionnaireUseCase: GetQuestionnaireUseCase,
     private val fillQuestionnaireUseCase: FillQuestionnaireUseCase,
     private val updateQuestionnaireUseCase: UpdateQuestionnaireUseCase
 ) : BaseViewModel() {
+    private val questionnaireMutable = MutableLiveData<ApiResult<Questionnaire>>()
+    val questionnaire: LiveData<ApiResult<Questionnaire>> = questionnaireMutable
+
+    private val questionnaireFlowMutable = MutableLiveData<String>()
+    val questionnaireFlow: LiveData<String> = questionnaireFlowMutable
+
     private val fillQuestionnaireResultFlowMutable = MutableLiveData<String>()
     val fillQuestionnaireResultFlow: LiveData<String> = fillQuestionnaireResultFlowMutable
 
@@ -28,6 +38,14 @@ class QuestionnaireViewModel(
 
     private val interestsMutable = MutableLiveData<List<Interest>>()
     val interests: LiveData<List<Interest>> = interestsMutable
+
+    fun getQuestionnaire(userId: String) = baseRequest(questionnaireMutable, questionnaireFlowMutable) {
+        getQuestionnaireUseCase(
+            GetQuestionnaireParam(
+                userId = userId
+            )
+        )
+    }
 
     fun fillQuestionnaire(
         name: String,
